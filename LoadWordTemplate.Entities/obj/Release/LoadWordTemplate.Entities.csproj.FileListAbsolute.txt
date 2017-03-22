@@ -1,0 +1,9 @@
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\bin\Release\LoadWordTemplate.Entities.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\bin\Release\LoadWordTemplate.Entities.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\obj\Release\LoadWordTemplate.Entities.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\obj\Release\LoadWordTemplate.Entities.pdb
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Entities\bin\Release\LoadWordTemplate.Entities.dll
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Entities\bin\Release\LoadWordTemplate.Entities.pdb
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Entities\obj\Release\LoadWordTemplate.Entities.csprojResolveAssemblyReference.cache
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Entities\obj\Release\LoadWordTemplate.Entities.dll
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Entities\obj\Release\LoadWordTemplate.Entities.pdb

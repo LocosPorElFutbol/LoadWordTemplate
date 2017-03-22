@@ -1,0 +1,14 @@
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Repositories.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Repositories.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Entities.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Entities.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.csprojResolveAssemblyReference.cache
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.pdb
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Repositories.dll
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Repositories.pdb
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Entities.dll
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\bin\Release\LoadWordTemplate.Entities.pdb
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.csprojResolveAssemblyReference.cache
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.dll
+C:\Leo\Dropbox\Desarrollos\Librerias\TemplateWord\LoadWordTemplate\LoadWordTemplate.Repositories\obj\Release\LoadWordTemplate.Repositories.pdb

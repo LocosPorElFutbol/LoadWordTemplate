@@ -1,0 +1,11 @@
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Client.exe
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Client.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Business.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Entities.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Repositories.dll
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Business.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Entities.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\bin\Debug\LoadWordTemplate.Repositories.pdb
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\obj\Debug\LoadWordTemplate.Client.csprojResolveAssemblyReference.cache
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\obj\Debug\LoadWordTemplate.Client.exe
+C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Client\obj\Debug\LoadWordTemplate.Client.pdb
