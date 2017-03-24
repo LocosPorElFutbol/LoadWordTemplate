@@ -1,4 +1,0 @@
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\bin\Debug\LoadWordTemplate.Entities.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\bin\Debug\LoadWordTemplate.Entities.pdb
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\obj\Debug\LoadWordTemplate.Entities.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Entities\obj\Debug\LoadWordTemplate.Entities.pdb

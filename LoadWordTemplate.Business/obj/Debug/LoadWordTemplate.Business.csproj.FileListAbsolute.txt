@@ -1,9 +1,0 @@
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Business.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Business.pdb
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Entities.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Repositories.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Entities.pdb
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\bin\Debug\LoadWordTemplate.Repositories.pdb
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\obj\Debug\LoadWordTemplate.Business.csprojResolveAssemblyReference.cache
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\obj\Debug\LoadWordTemplate.Business.dll
-C:\Users\leona_000\Documents\Visual Studio 2013\Projects\LoadWordTemplate\LoadWordTemplate.Business\obj\Debug\LoadWordTemplate.Business.pdb
