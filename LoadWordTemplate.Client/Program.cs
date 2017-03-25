@@ -29,6 +29,7 @@ namespace LoadWordTemplate.Client
 
             CartaEntity e = new CartaEntity();
             e.Titulo = "Sr.";
+            e.NombrePila = "Leito";
             e.NombreCompleto = "Leonardo E. Choque Rodriguez";
             e.Direccion = "Calderon de la barca 2148, 7 E";
             e.Localidad = "CABA";
@@ -38,6 +39,7 @@ namespace LoadWordTemplate.Client
 
             e = new CartaEntity();
             e.Titulo = "Sr.";
+            e.NombrePila = "José";
             e.NombreCompleto = "Don Jose de San Martin";
             e.Direccion = "alicante 1022";
             e.Localidad = "caba";
@@ -47,6 +49,7 @@ namespace LoadWordTemplate.Client
 
             e = new CartaEntity();
             e.Titulo = "Sra.";
+            e.NombrePila = "Barto";
             e.NombreCompleto = "bart simpson";
             e.Direccion = "siempre viva 742";
             e.Localidad = "springfield";
@@ -100,8 +103,8 @@ namespace LoadWordTemplate.Client
             try
             {
                 string pathWordTemplateCarta = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta.docx";
-                string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\Secciones.docx";
-//                string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta300.docx";
+                //string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\Secciones.docx";
+                string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta300.docx";
                 string pathWordTemplateCarta300Actualizado = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta300Actualizado.docx";
 
                 ReemplazarCartasBusiness rcb = new ReemplazarCartasBusiness(

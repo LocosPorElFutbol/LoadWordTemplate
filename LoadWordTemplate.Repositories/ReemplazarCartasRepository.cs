@@ -41,6 +41,7 @@ namespace LoadWordTemplate.Repositories
 
                 wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
+                //Elimino las secciones del documento que no voy a utilizar
                 this.EliminarSecciones(wordDoc, etiquetas.Count());
 
                 int i = 1;
