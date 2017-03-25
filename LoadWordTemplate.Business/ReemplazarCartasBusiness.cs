@@ -23,11 +23,11 @@ namespace LoadWordTemplate.Business
                     _pathWordTemplateCarta300Actualizado);
         }
 
-        public void Reemplazar300Cartas()
+        public void Reemplazar300Cartas(IEnumerable<CartaEntity> etiquetas)
         {
             try
             {
-                reemplazarCartasRepository.Reemplazar300Cartas();
+                reemplazarCartasRepository.Reemplazar300Cartas(etiquetas);
             }
             catch (Exception ex)
             {

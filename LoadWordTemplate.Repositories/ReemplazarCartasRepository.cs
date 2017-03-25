@@ -25,7 +25,7 @@ namespace LoadWordTemplate.Repositories
             pathWordTemplateCarta300Actualizado = _pathWordTemplateCarta300Actualizado;
         }
 
-        public void Reemplazar300Cartas()
+        public void Reemplazar300Cartas(IEnumerable<CartaEntity> etiquetas)
         {
             try
             {
@@ -41,9 +41,11 @@ namespace LoadWordTemplate.Repositories
 
                 wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
+                this.EliminarSecciones(wordDoc, etiquetas.Count());
+
                 int i = 1;
                 //Recorro la lista de etiquetas
-                //foreach (var obj in listaEtiquetas)
+                foreach (var obj in etiquetas)
                 {
                     //Recorro las etiquetas del WORD
                     foreach (Field myMergeField in wordDoc.Fields)
@@ -64,7 +66,52 @@ namespace LoadWordTemplate.Repositories
                             fieldName = fieldName.Trim();
 
                             //Reemplazo mi mergedmail con el texto del WordTemplateCarta
-                            if (fieldName == "CuerpoCarta")
+                            if (fieldName == "DiaCumpleanios" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.DiaCumpleanios);
+                            }
+                            if (fieldName == "Mes" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.MesCumpleanios);
+                            }
+                            if (fieldName == "Anio" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(DateTime.Now.Year.ToString());
+                            }
+                            if (fieldName == "Titulo" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.Titulo);
+                            }
+                            if (fieldName == "NombreCompletoApellido" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.NombreCompletoApellido);
+                            }
+                            if (fieldName == "Direccion" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.Direccion);
+                            }
+                            if (fieldName == "Localidad" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.Localidad);
+                            }
+                            if (fieldName == "CodigoPostal" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.CodigoPostal);
+                            }
+                            if (fieldName == "NombrePila" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.NombrePila);
+                            }
+                            if (fieldName == "CuerpoCarta" + i.ToString())
                             {
                                 myMergeField.Select();
                                 wordApp.Selection.TypeText(cuerpo);
@@ -83,6 +130,26 @@ namespace LoadWordTemplate.Repositories
             }
         }
 
+        /// <summary>
+        /// Elimina las secciones de un documento word a partir de la siguiente pagina que se envia como parámetro.
+        /// </summary>
+        /// <param name="doc">Documento word a modificar</param>
+        /// <param name="borrarPagina">ultima pagina que conservará el documento, se eliminarán a partir de la siguiente a este parametro.</param>
+        public void EliminarSecciones(Document doc, int borrarPagina)
+        {
+            object missing = Type.Missing;
+
+            foreach (Microsoft.Office.Interop.Word.Section section in doc.Sections)
+            {
+                if (section.Index > borrarPagina)
+                    section.Range.Delete(ref missing, ref missing);
+            }
+        }
+
+        /// <summary>
+        /// Obtiene el cuerpo de la carta, que se encuentra en los tags "« »". Nombre del campo: CuerpoCarta.
+        /// </summary>
+        /// <returns>Retorna un string que contiene el texto de la carta.</returns>
         private string ObtenerCuerpoCarta()
         {
             try

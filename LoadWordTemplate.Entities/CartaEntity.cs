@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 
@@ -18,7 +19,20 @@ namespace LoadWordTemplate.Entities
         public string CuerpoCarta { get; set; }
         public string NombreCompletoApellido
         {
-            get { return NombreCompleto + ", " + Apellido; }
+            get { return NombreCompleto + " " + Apellido; }
+        }
+        public string DiaCumpleanios
+        {
+            get { return FechaCumpleanios.Day.ToString(); }
+        }
+        public string MesCumpleanios
+        {
+            get { return FechaCumpleanios.ToString("MMMM", CultureInfo.CreateSpecificCulture("es")); }
+        }
+        public string AnioCumpleanios
+        {
+            get { return FechaCumpleanios.Year.ToString(); }
         }
     }
 }
+
