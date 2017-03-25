@@ -25,105 +25,35 @@ namespace LoadWordTemplate.Repositories
             pathWordTemplateCarta300Actualizado = _pathWordTemplateCarta300Actualizado;
         }
 
-        public void Reemplazar300Cartas(IEnumerable<CartaEntity> etiquetas)
+        public void Reemplazar300Cartas(IEnumerable<CartaEntity> listaClientes)
         {
             try
             {
                 //Obtengo el cuerpo del mensaje
-                string cuerpo = this.ObtenerCuerpoCarta();
+                string cuerpoCarta = this.ObtenerCuerpoCarta();
 
                 //OBJECT OF MISSING "NULL VALUE"
                 Object oMissing = System.Reflection.Missing.Value;
                 Object oTemplatePath = this.pathWordTemplateCarta300;
 
-                Application wordApp = new Application();
+                Microsoft.Office.Interop.Word.Application wordApp = new Microsoft.Office.Interop.Word.Application();
                 Document wordDoc = new Document();
 
                 wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
                 //Elimino las secciones del documento que no voy a utilizar
-                this.EliminarSecciones(wordDoc, etiquetas.Count());
+                this.EliminarSecciones(wordDoc, listaClientes.Count());
 
-                int i = 1;
-                //Recorro la lista de etiquetas
-                foreach (var obj in etiquetas)
-                {
-                    //Recorro las etiquetas del WORD
-                    foreach (Field myMergeField in wordDoc.Fields)
-                    {
-                        Range rngFieldCode = myMergeField.Code;
-                        String fieldText = rngFieldCode.Text;
+                //Reemplazo los campos por los valores de la lista
+                this.ReemplazarCampos(wordApp, wordDoc, listaClientes, cuerpoCarta);
 
-                        // ONLY GETTING THE MAILMERGE FIELDS
-                        if (fieldText.StartsWith(" MERGEFIELD"))
-                        {
-                            //Extraigo el mergedfield del word, lo spliteo porque word
-                            //ingresa caracteres raros al modificar el texto del mergedfield
-                            String fieldNameCompuesto = fieldText.Replace(" MERGEFIELD", "");
-                            string[] arrayCampo = fieldNameCompuesto.Split('\\');
-                            string fieldName = arrayCampo[0].ToString();
-
-                            //Elimino espacios en blanco
-                            fieldName = fieldName.Trim();
-
-                            //Reemplazo mi mergedmail con el texto del WordTemplateCarta
-                            if (fieldName == "DiaCumpleanios" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.DiaCumpleanios);
-                            }
-                            if (fieldName == "Mes" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.MesCumpleanios);
-                            }
-                            if (fieldName == "Anio" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(DateTime.Now.Year.ToString());
-                            }
-                            if (fieldName == "Titulo" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.Titulo);
-                            }
-                            if (fieldName == "NombreCompletoApellido" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.NombreCompletoApellido);
-                            }
-                            if (fieldName == "Direccion" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.Direccion);
-                            }
-                            if (fieldName == "Localidad" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.Localidad);
-                            }
-                            if (fieldName == "CodigoPostal" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.CodigoPostal);
-                            }
-                            if (fieldName == "NombrePila" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.NombrePila);
-                            }
-                            if (fieldName == "CuerpoCarta" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(cuerpo);
-                            }
-                        }
-                    }
-                    i++;
-                }
-
+                //Guardo los cambios en nuevo archivo word
                 wordDoc.SaveAs(pathWordTemplateCarta300Actualizado);
                 ((Microsoft.Office.Interop.Word._Document)wordDoc).Close();
+
+                //Cierro la aplicación word
+                object oMissingValue = System.Reflection.Missing.Value;
+                ((_Application)wordApp).Quit(oMissingValue, oMissingValue, oMissingValue);
             }
             catch (Exception ex)
             {
@@ -136,7 +66,7 @@ namespace LoadWordTemplate.Repositories
         /// </summary>
         /// <param name="doc">Documento word a modificar</param>
         /// <param name="borrarPagina">ultima pagina que conservará el documento, se eliminarán a partir de la siguiente a este parametro.</param>
-        public void EliminarSecciones(Document doc, int borrarPagina)
+        private void EliminarSecciones(Document doc, int borrarPagina)
         {
             object missing = Type.Missing;
 
@@ -144,6 +74,87 @@ namespace LoadWordTemplate.Repositories
             {
                 if (section.Index > borrarPagina)
                     section.Range.Delete(ref missing, ref missing);
+            }
+        }
+
+        private void ReemplazarCampos(Application wordApp, Document wordDoc, IEnumerable<CartaEntity> listaClientes, string cuerpoCarta)
+        {
+            int i = 1;
+            //Recorro la lista de etiquetas
+            foreach (var obj in listaClientes)
+            {
+                //Recorro las etiquetas del WORD
+                foreach (Field myMergeField in wordDoc.Fields)
+                {
+                    Range rngFieldCode = myMergeField.Code;
+                    String fieldText = rngFieldCode.Text;
+
+                    // ONLY GETTING THE MAILMERGE FIELDS
+                    if (fieldText.StartsWith(" MERGEFIELD"))
+                    {
+                        //Extraigo el mergedfield del word, lo spliteo porque word
+                        //ingresa caracteres raros al modificar el texto del mergedfield
+                        String fieldNameCompuesto = fieldText.Replace(" MERGEFIELD", "");
+                        string[] arrayCampo = fieldNameCompuesto.Split('\\');
+                        string fieldName = arrayCampo[0].ToString();
+
+                        //Elimino espacios en blanco
+                        fieldName = fieldName.Trim();
+
+                        //Reemplazo mi mergedmail con el texto del WordTemplateCarta
+                        if (fieldName == "DiaCumpleanios" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.DiaCumpleanios);
+                        }
+                        if (fieldName == "Mes" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.MesCumpleanios);
+                        }
+                        if (fieldName == "Anio" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(DateTime.Now.Year.ToString());
+                        }
+                        if (fieldName == "Titulo" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.Titulo);
+                        }
+                        if (fieldName == "NombreCompletoApellido" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.NombreCompletoApellido);
+                        }
+                        if (fieldName == "Direccion" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.Direccion);
+                        }
+                        if (fieldName == "Localidad" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.Localidad);
+                        }
+                        if (fieldName == "CodigoPostal" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.CodigoPostal);
+                        }
+                        if (fieldName == "NombrePila" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(obj.NombrePila);
+                        }
+                        if (fieldName == "CuerpoCarta" + i.ToString())
+                        {
+                            myMergeField.Select();
+                            wordApp.Selection.TypeText(cuerpoCarta);
+                        }
+                    }
+                }
+                i++;
             }
         }
 
@@ -181,7 +192,7 @@ namespace LoadWordTemplate.Repositories
                         // Elimino espacios en blanco
                         fieldName = fieldName.Trim();
 
-                        //Obtengo el cuerpo de la carta y elimino los tags «»
+                        //Obtengo el cuerpo de la carta y elimino los tags « »
                         if (fieldName == "CuerpoCarta")
                         {
                             myMergeField.Select();
@@ -192,6 +203,9 @@ namespace LoadWordTemplate.Repositories
                         }
                     }
                 }
+
+                object oMissingValue = System.Reflection.Missing.Value;
+                ((_Application)wordApp).Quit(oMissingValue, oMissingValue, oMissingValue);
 
                 return textoCuerpo;
             }
