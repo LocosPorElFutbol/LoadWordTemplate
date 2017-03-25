@@ -25,7 +25,7 @@ namespace LoadWordTemplate.Repositories
             pathWordTemplateCarta300Actualizado = _pathWordTemplateCarta300Actualizado;
         }
 
-        public void Reemplazar300Cartas(IEnumerable<CartaEntity> listaClientes)
+        public void ReemplazarImprimir300Cartas(IEnumerable<CartaEntity> listaClientes)
         {
             try
             {
@@ -46,6 +46,9 @@ namespace LoadWordTemplate.Repositories
 
                 //Reemplazo los campos por los valores de la lista
                 this.ReemplazarCampos(wordApp, wordDoc, listaClientes, cuerpoCarta);
+
+                //Imprimir cartas del documento Actualizado
+                this.ImprimirCartas(wordApp);
 
                 //Guardo los cambios en nuevo archivo word
                 wordDoc.SaveAs(pathWordTemplateCarta300Actualizado);
@@ -77,6 +80,13 @@ namespace LoadWordTemplate.Repositories
             }
         }
 
+        /// <summary>
+        /// Remplaza los campos del documento word por los valores que tiene la lista de clientes.
+        /// </summary>
+        /// <param name="wordApp">Aplicacion word que contiene el documento a modificar.</param>
+        /// <param name="wordDoc">Documento Word que contiene los campos a actualizar</param>
+        /// <param name="listaClientes">Lista de clientes que se utilizara para completar los campos del documento word.</param>
+        /// <param name="cuerpoCarta">String que contiene el cuerpo de la carta.</param>
         private void ReemplazarCampos(Application wordApp, Document wordDoc, IEnumerable<CartaEntity> listaClientes, string cuerpoCarta)
         {
             int i = 1;
@@ -215,74 +225,28 @@ namespace LoadWordTemplate.Repositories
             }
         }
 
-        public void ImprimirCartas(double cantidadHojasAImprimir)
+        /// <summary>
+        /// Imprime las cartas del documento word actualizado.
+        /// </summary>
+        /// <param name="wordApp">Application que contiene el documento word actualizado.</param>
+        private void ImprimirCartas(Application wordApp)
         {
             try
             {
-                Application wordApp = new Application();
-                wordApp.Visible = false;
-
                 System.Windows.Forms.PrintDialog pDialog = new System.Windows.Forms.PrintDialog();
                 if (pDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
-                    Document doc = wordApp.Documents.Add(pathWordTemplateCarta300);
+                    Document worDoc = wordApp.Documents.Add(pathWordTemplateCarta300Actualizado);
 
                     PrinterSettings printerSettings = pDialog.PrinterSettings;
                     wordApp.ActivePrinter = printerSettings.PrinterName;
-
-                    //wordApp.ActivePrinter = pDialog.PrinterSettings.PrinterName;                
-
-                    wordApp.ActiveDocument.PrintOut(); //this will also work: doc.PrintOut();
-                    doc.Close(SaveChanges: false);
-                    doc = null;
-
-                    object copies = "1";
-                    object pages = "1";
-                    object range = Microsoft.Office.Interop.Word.WdPrintOutRange.wdPrintCurrentPage;
-                    object items = Microsoft.Office.Interop.Word.WdPrintOutItem.wdPrintDocumentContent;
-                    object pageType = Microsoft.Office.Interop.Word.WdPrintOutPages.wdPrintAllPages;
-                    object oTrue = true;
-                    object oFalse = false;
-                    object missing = System.Reflection.Missing.Value;
-                    //Word.Document document = this.Application.ActiveDocument;
-                    Microsoft.Office.Interop.Word.Document document = doc;
-
-                    document.PrintOut(
-                        ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-                        ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-                        ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
-
-
-                    //IMPRIMIR
-                    //https://msdn.microsoft.com/en-us/library/b9f0ke7y.aspx
-                    //http://stackoverflow.com/questions/878302/printing-using-word-interop-with-print-dialog
-                    //object copies = "1";
-                    //object pages = "1";
-                    //object range = Word.WdPrintOutRange.wdPrintCurrentPage;
-                    //object items = Word.WdPrintOutItem.wdPrintDocumentContent;
-                    //object pageType = Word.WdPrintOutPages.wdPrintAllPages;
-                    //object oTrue = true;
-                    //object oFalse = false;
-                    //Word.Document document = this.Application.ActiveDocument;
-
-                    //document.PrintOut(
-                    //    ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-                    //    ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-                    //    ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
+                    wordApp.ActiveDocument.PrintOut();
                 }
-
-                // <EDIT to include Jason's suggestion>
-                ((_Application)wordApp).Quit(SaveChanges: false);
-                // </EDIT>
-
-                // Original: wordApp.Quit(SaveChanges: false);
-                wordApp = null;
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
-
     }
 }

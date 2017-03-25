@@ -27,7 +27,7 @@ namespace LoadWordTemplate.Business
         {
             try
             {
-                reemplazarCartasRepository.Reemplazar300Cartas(etiquetas);
+                reemplazarCartasRepository.ReemplazarImprimir300Cartas(etiquetas);
             }
             catch (Exception ex)
             {
