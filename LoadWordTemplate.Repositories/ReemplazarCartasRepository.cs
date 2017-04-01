@@ -16,13 +16,30 @@ namespace LoadWordTemplate.Repositories
         private string textoCuerpo = string.Empty;
 
         public ReemplazarCartasRepository(
-            string _pathWordTemplateCarta, 
+            string _pathWordTemplateCarta,
             string _pathWordTemplateCarta300,
             string _pathWordTemplateCarta300Actualizado)
         {
             pathWordTemplateCarta = _pathWordTemplateCarta;
             pathWordTemplateCarta300 = _pathWordTemplateCarta300;
             pathWordTemplateCarta300Actualizado = _pathWordTemplateCarta300Actualizado;
+        }
+
+        public ReemplazarCartasRepository(string _pathWordTemplateCarta)
+        {
+            pathWordTemplateCarta = _pathWordTemplateCarta;
+        }
+
+        public void AbrirTemplateCarta()
+        {
+            Object oMissing = System.Reflection.Missing.Value;
+            Object oTemplatePath = this.pathWordTemplateCarta;
+
+            Application wordApp = new Application();
+            Document wordDoc = new Document();
+
+            wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
+            wordApp.Visible = true;
         }
 
         public void ReemplazarImprimir300Cartas(IEnumerable<CartaEntity> listaClientes)
@@ -47,11 +64,13 @@ namespace LoadWordTemplate.Repositories
                 //Reemplazo los campos por los valores de la lista
                 this.ReemplazarCampos(wordApp, wordDoc, listaClientes, cuerpoCarta);
 
+                //Guardo los cambios en nuevo archivo word
+                wordDoc.SaveAs(pathWordTemplateCarta300Actualizado);
+
                 //Imprimir cartas del documento Actualizado
                 this.ImprimirCartas(wordApp);
 
-                //Guardo los cambios en nuevo archivo word
-                wordDoc.SaveAs(pathWordTemplateCarta300Actualizado);
+                //Cierro documento word
                 ((Microsoft.Office.Interop.Word._Document)wordDoc).Close();
 
                 //Cierro la aplicación word

@@ -12,7 +12,7 @@ namespace LoadWordTemplate.Business
         ReemplazarCartasRepository reemplazarCartasRepository = null;
 
         public ReemplazarCartasBusiness(
-            string _pathWordTemplateCarta, 
+            string _pathWordTemplateCarta,
             string _pathWordTemplateCarta300,
             string _pathWordTemplateCarta300Actualizado)
         {
@@ -23,7 +23,24 @@ namespace LoadWordTemplate.Business
                     _pathWordTemplateCarta300Actualizado);
         }
 
-        public void Reemplazar300Cartas(IEnumerable<CartaEntity> etiquetas)
+        public ReemplazarCartasBusiness(string _pathWordTemplateCarta)
+        {
+            reemplazarCartasRepository = new ReemplazarCartasRepository(_pathWordTemplateCarta);
+        }
+
+        public void AbrirTemplateCarta()
+        {
+            try
+            {
+                reemplazarCartasRepository.AbrirTemplateCarta();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public void ReemplazarImprimir300Cartas(IEnumerable<CartaEntity> etiquetas)
         {
             try
             {

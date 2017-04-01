@@ -10,211 +10,63 @@ namespace LoadWordTemplate.Repositories
 {
     public class ReemplazarEtiquetasRepository
     {
-        private string pathTemplateWord = string.Empty;
-        private string pathWordModificado = string.Empty;
+        private string pathWordTemplateEtiquetas300 = string.Empty;
+        private string pathWordTemplateEtiquetas300Actualizado = string.Empty;
+        public int CANTIDAD_ETIQUETAS_POR_HOJA = 30;
 
-        public ReemplazarEtiquetasRepository(string _pathTemplateWord, string _pathWordModificado)
+        /// <summary>
+        /// Constructor del repositorio responsable de reemplazar e imprimir las etiquetas de las cartas.
+        /// </summary>
+        /// <param name="_pathWordTemplateEtiquetas300">Path donde se encuentra el template del word a reeemplazar.</param>
+        /// <param name="_pathWordTemplateEtiquetas300Actualizado">Path que contiene el archivo actualizado con la lista de clientes en las etiquetas.</param>
+        public ReemplazarEtiquetasRepository
+            (string _pathWordTemplateEtiquetas300, string _pathWordTemplateEtiquetas300Actualizado)
         {
-            pathTemplateWord = _pathTemplateWord;
-            pathWordModificado = _pathWordModificado;
+            pathWordTemplateEtiquetas300 = _pathWordTemplateEtiquetas300;
+            pathWordTemplateEtiquetas300Actualizado = _pathWordTemplateEtiquetas300Actualizado;
         }
 
-        public void Reemplazar(List<CartaEntity> listaEtiquetas)
+        /// <summary>
+        /// Metodo que reemplaza el template de etiquetas con los valores que contiene la lista que se envia como 
+        /// parametro, posterior a esto ejecuta la orden de imprimir, dejando al usuario seleccionar la impresora
+        /// deseada.
+        /// </summary>
+        /// <param name="listaClientes">Lista que contiene los datos de los clientes a completar en las etiquetas.</param>
+        public void ReemplazarImprimir300Etiquetas(IEnumerable<CartaEntity> listaClientes)
         {
             try
             {
                 //OBJECT OF MISSING "NULL VALUE"
                 Object oMissing = System.Reflection.Missing.Value;
-                Object oTemplatePath = this.pathTemplateWord;
-
-                Application wordApp = new Application();
-                Document wordDoc = new Document();
-
-                wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
-                //int i = 1;
-
-                foreach (var obj in listaEtiquetas)
-                {
-                    //Recorro las etiquetas del WORD
-                    foreach (Field myMergeField in wordDoc.Fields)
-                    {
-                        Range rngFieldCode = myMergeField.Code;
-                        String fieldText = rngFieldCode.Text;
-
-                        // ONLY GETTING THE MAILMERGE FIELDS
-                        if (fieldText.StartsWith(" MERGEFIELD"))
-                        {
-                            //Metodo propio para obtener el nombre del filed (el de arriba pincha)
-                            String fieldName = fieldText.Replace(" MERGEFIELD", "");
-
-                            // GIVES THE FIELDNAMES AS THE USER HAD ENTERED IN .dot FILE
-                            fieldName = fieldName.Trim();
-
-                            switch (fieldName)
-                            {
-                                case "NombreCompletoApellido":
-                                    myMergeField.Select();
-                                    wordApp.Selection.TypeText(obj.NombreCompletoApellido);
-                                    break;
-                                case "Direccion":
-                                    myMergeField.Select();
-                                    wordApp.Selection.TypeText(obj.Direccion);
-                                    break;
-                                case "Localidad":
-                                    myMergeField.Select();
-                                    wordApp.Selection.TypeText(obj.Localidad);
-                                    break;
-                                case "CP":
-                                    myMergeField.Select();
-                                    wordApp.Selection.TypeText(obj.CodigoPostal);
-                                    break;
-                            }
-                        }
-                    }
-                }
-
-                wordDoc.SaveAs(pathWordModificado);
-                wordDoc.Close();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
-
-
-        public void ReemplazarORIGINAL(List<CartaEntity> listaEtiquetas)
-        {
-            try
-            {
-                //OBJECT OF MISSING "NULL VALUE"
-                Object oMissing = System.Reflection.Missing.Value;
-                Object oTemplatePath = this.pathTemplateWord;
+                Object oTemplatePath = this.pathWordTemplateEtiquetas300;
 
                 Application wordApp = new Application();
                 Document wordDoc = new Document();
 
                 wordDoc = wordApp.Documents.Add(ref oTemplatePath, ref oMissing, ref oMissing, ref oMissing);
 
-                int i = 1;
-                //Recorro la lista de etiquetas
-                foreach (var obj in listaEtiquetas)
-                {
-                    //Recorro las etiquetas del WORD
-                    foreach (Field myMergeField in wordDoc.Fields)
-                    {
-                        Range rngFieldCode = myMergeField.Code;
-                        String fieldText = rngFieldCode.Text;
+                //Calculo la cantidad de hojas respecto de etiquetas
+                int cantidadHojas = 
+                    (int)Math.Ceiling((decimal)listaClientes.Count() / this.CANTIDAD_ETIQUETAS_POR_HOJA);
 
-                        // ONLY GETTING THE MAILMERGE FIELDS
-                        if (fieldText.StartsWith(" MERGEFIELD"))
-                        {
-                            //Metodo propio para obtener el nombre del filed (el de arriba pincha)
-                            String fieldName = fieldText.Replace(" MERGEFIELD", "");
+                //Eliminar secciones dependiendo de la cantidad de etiquetas
+                this.EliminarSecciones(wordDoc, cantidadHojas);
 
-                            // GIVES THE FIELDNAMES AS THE USER HAD ENTERED IN .dot FILE
-                            fieldName = fieldName.Trim();
+                //Reemplazo valores de la lista en las etiquetas
+                this.ReemplazarEtiquetas(wordApp, wordDoc, listaClientes);
 
-                            // **** FIELD REPLACEMENT IMPLEMENTATION GOES HERE ****//
-                            // THE PROGRAMMER CAN HAVE HIS OWN IMPLEMENTATIONS HERE
-                            if (fieldName == "NombreApellido" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.NombreCompletoApellido);
-                            }
-                            if (fieldName == "Direccion" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.Direccion);
-                            }
-                            if (fieldName == "Localidad" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.Localidad);
-                            }
-                            if (fieldName == "CP" + i.ToString())
-                            {
-                                myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.CodigoPostal);
-                            }
-                        }
-                    }
-                    i++;
-                }
+                //Guardo como nuevo documento.
+                wordDoc.SaveAs(pathWordTemplateEtiquetas300Actualizado);
 
-                wordDoc.SaveAs(pathWordModificado);
-                wordDoc.Close();
-                //wordApp.Documents.Open("c:\\leo\\myFile.doc");
-                //wordApp.Application.Quit();
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+                //Imprimo etiquetas
+                this.ImprimirEtiquetas(wordApp);
 
-        public void ImprimirEtiquetas(double cantidadHojasAImprimir)
-        {
-            try
-            {
-                Application wordApp = new Application();
-                wordApp.Visible = false;
+                //Cierro documento word
+                ((Microsoft.Office.Interop.Word._Document)wordDoc).Close();
 
-                System.Windows.Forms.PrintDialog pDialog = new System.Windows.Forms.PrintDialog();
-                if (pDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-                {
-                    Document doc = wordApp.Documents.Add(pathWordModificado);
-
-                    PrinterSettings printerSettings = pDialog.PrinterSettings;
-                    wordApp.ActivePrinter = printerSettings.PrinterName;
-
-                    //wordApp.ActivePrinter = pDialog.PrinterSettings.PrinterName;                
-
-                    wordApp.ActiveDocument.PrintOut(); //this will also work: doc.PrintOut();
-                    doc.Close(SaveChanges: false);
-                    doc = null;
-
-                    object copies = "1";
-                    object pages = "1";
-                    object range = Microsoft.Office.Interop.Word.WdPrintOutRange.wdPrintCurrentPage;
-                    object items = Microsoft.Office.Interop.Word.WdPrintOutItem.wdPrintDocumentContent;
-                    object pageType = Microsoft.Office.Interop.Word.WdPrintOutPages.wdPrintAllPages;
-                    object oTrue = true;
-                    object oFalse = false;
-                    object missing = System.Reflection.Missing.Value;
-                    //Word.Document document = this.Application.ActiveDocument;
-                    Microsoft.Office.Interop.Word.Document document = doc;
-
-                    document.PrintOut(
-                        ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-                        ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-                        ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
-
-
-                    //IMPRIMIR
-                    //https://msdn.microsoft.com/en-us/library/b9f0ke7y.aspx
-                    //http://stackoverflow.com/questions/878302/printing-using-word-interop-with-print-dialog
-                    //object copies = "1";
-                    //object pages = "1";
-                    //object range = Word.WdPrintOutRange.wdPrintCurrentPage;
-                    //object items = Word.WdPrintOutItem.wdPrintDocumentContent;
-                    //object pageType = Word.WdPrintOutPages.wdPrintAllPages;
-                    //object oTrue = true;
-                    //object oFalse = false;
-                    //Word.Document document = this.Application.ActiveDocument;
-
-                    //document.PrintOut(
-                    //    ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-                    //    ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-                    //    ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
-                }
-
-                // <EDIT to include Jason's suggestion>
-                ((_Application)wordApp).Quit(SaveChanges: false);
-                // </EDIT>
-
-                // Original: wordApp.Quit(SaveChanges: false);
-                wordApp = null;
+                //Cierro la aplicación word
+                object oMissingValue = System.Reflection.Missing.Value;
+                ((_Application)wordApp).Quit(oMissingValue, oMissingValue, oMissingValue);
             }
             catch (Exception ex)
             {
@@ -223,22 +75,115 @@ namespace LoadWordTemplate.Repositories
         }
 
         /// <summary>
-        /// Call the PrintOut method of the ThisDocument class in your project to print the entire document. 
-        /// To use this example, run the code from the ThisDocument class.
+        /// Elimina las secciones de un documento word a partir de la siguiente pagina que se envia como parámetro.
         /// </summary>
-        public void ImprimirEtiquetasMSDN()
+        /// <param name="doc">Documento word a modificar</param>
+        /// <param name="borrarPagina">ultima pagina que conservará el documento, se eliminarán a partir de la siguiente a este parametro.</param>
+        private void EliminarSecciones(Document doc, int borrarPagina)
         {
-            //object copies = "1";
-            //object pages = "";
-            //object range = Word.WdPrintOutRange.wdPrintAllDocument;
-            //object items = Word.WdPrintOutItem.wdPrintDocumentContent;
-            //object pageType = Word.WdPrintOutPages.wdPrintAllPages;
-            //object oTrue = true;
-            //object oFalse = false;
+            object missing = Type.Missing;
 
-            //this.PrintOut(ref oTrue, ref oFalse, ref range, ref missing, ref missing, ref missing,
-            //    ref items, ref copies, ref pages, ref pageType, ref oFalse, ref oTrue,
-            //    ref missing, ref oFalse, ref missing, ref missing, ref missing, ref missing);
+            foreach (Microsoft.Office.Interop.Word.Section section in doc.Sections)
+            {
+                if (section.Index > borrarPagina)
+                    section.Range.Delete(ref missing, ref missing);
+            }
+        }
+
+        /// <summary>
+        /// Reemplaza los campos de las etiquetas por los valores que contiene la lista de clientes.
+        /// </summary>
+        /// <param name="wordApp">Application word que contiene el documento actualizado.</param>
+        /// <param name="wordDoc">Documento word actualizado.</param>
+        /// <param name="listaClientes">Lista que contiene los datos de clientes a reflejar en las etiquetas.</param>
+        private void ReemplazarEtiquetas(Application wordApp, Document wordDoc, IEnumerable<CartaEntity> listaClientes)
+        {
+            try
+            {
+                //Variable para recorrer etiquetas
+                int i = 1;
+
+                //Recorro la lista de etiquetas
+                foreach (var obj in listaClientes)
+                {
+                    //Variable para detener el recorrido de campos cuando se completo la etiqueta
+                    int j = 0;
+
+                    //Recorro las etiquetas del WORD
+                    foreach (Field myMergeField in wordDoc.Fields)
+                    {
+                        Range rngFieldCode = myMergeField.Code;
+                        String fieldText = rngFieldCode.Text;
+
+                        // ONLY GETTING THE MAILMERGE FIELDS
+                        if (fieldText.StartsWith(" MERGEFIELD"))
+                        {
+                            //Metodo propio para obtener el nombre del filed (el de arriba pincha)
+                            String fieldName = fieldText.Replace(" MERGEFIELD", "");
+
+                            // GIVES THE FIELDNAMES AS THE USER HAD ENTERED IN .dot FILE
+                            fieldName = fieldName.Trim();
+
+                            if (fieldName == "NombreCompletoApellido" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.NombreCompletoApellido);
+                                j++;
+                            }
+                            if (fieldName == "Direccion" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.Direccion);
+                                j++;
+                            }
+                            if (fieldName == "Localidad" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.Localidad);
+                                j++;
+                            }
+                            if (fieldName == "CodigoPostal" + i.ToString())
+                            {
+                                myMergeField.Select();
+                                wordApp.Selection.TypeText(obj.CodigoPostal);
+                                j++;
+                            }
+                            if (j == 4)
+                                break;
+                        }
+                    }
+                    i++;
+                }
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        /// <summary>
+        /// Imprime las etiquetas del documento word actualizado.
+        /// </summary>
+        /// <param name="wordApp">Application que contiene el documento word actualizado.</param>
+        private void ImprimirEtiquetas(Application wordApp)
+        {
+            try
+            {
+                System.Windows.Forms.PrintDialog pDialog = new System.Windows.Forms.PrintDialog();
+                if (pDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    Document worDoc = wordApp.Documents.Add(pathWordTemplateEtiquetas300Actualizado);
+
+                    PrinterSettings printerSettings = pDialog.PrinterSettings;
+                    wordApp.ActivePrinter = printerSettings.PrinterName;
+                    wordApp.ActiveDocument.PrintOut();
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
     }
 }

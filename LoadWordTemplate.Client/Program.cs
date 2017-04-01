@@ -14,8 +14,9 @@ namespace LoadWordTemplate.Client
             try
             {
                 var e = Etiquetas();
-                //TestEtiquetas();
-                TestCartas(e);
+                TestEtiquetas();
+                //TestCartas(e);
+                //TestTemplateCarta();
             }
             catch (Exception ex)
             {
@@ -57,26 +58,29 @@ namespace LoadWordTemplate.Client
             e.FechaCumpleanios = new DateTime(2000, 10, 25);
             lista.Add(e);
 
-            //e = new CartaEntity();
-            //e.NombreCompleto = "Homero Simpson";
-            //e.Direccion = "Siempreviva 742";
-            //e.Localidad = "Springfield";
-            //e.CodigoPostal = "222";
-            //lista.Add(e);
+            e = new CartaEntity();
+            e.NombreCompleto = "Homero Simpson";
+            e.Direccion = "Siempreviva 742";
+            e.Localidad = "Springfield";
+            e.CodigoPostal = "222";
+            lista.Add(e);
 
-            //e = new CartaEntity();
-            //e.NombreCompleto = "Pedro Picapiedra";
-            //e.Direccion = "La edad de piedra";
-            //e.Localidad = "NOSE";
-            //e.CodigoPostal = "0600";
-            //lista.Add(e);
+            e = new CartaEntity();
+            e.NombreCompleto = "Pedro Picapiedra";
+            e.Direccion = "La edad de piedra";
+            e.Localidad = "NOSE";
+            e.CodigoPostal = "0600";
+            lista.Add(e);
 
-            //e = new CartaEntity();
-            //e.NombreCompleto = "Marulo Hernandez";
-            //e.Direccion = "white 123";
-            //e.Localidad = "CABA";
-            //e.CodigoPostal = "1122";
-            //lista.Add(e);
+            e = new CartaEntity();
+            e.NombreCompleto = "Marulo Hernandez";
+            e.Direccion = "white 123";
+            e.Localidad = "CABA";
+            e.CodigoPostal = "1122";
+            lista.Add(e);
+
+            for (int j = 0; j < 24; j++)
+                lista.Add(new CartaEntity());
 
             return lista;
         }
@@ -85,16 +89,13 @@ namespace LoadWordTemplate.Client
         {
             var lista = Etiquetas();
 
-            string pathTemplate = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\Template EtiquetasO.dotx";
-            string pathNewWord = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\myfile.doc";
+            string pathTemplate = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateEtiquetas300.docx";
+            string pathTemplateActualizado = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateEtiquetas300Actualizado.docx";
 
-            ReemplazarEtiquetasBusiness reb = new ReemplazarEtiquetasBusiness(pathTemplate, pathNewWord);
-            reb.Reemplazar(lista);
-            double cantidadHojasImprimir = Math.Ceiling((double)lista.Count() / reb.CANTIDAD_ETIQUETAS_POR_HOJA);
-            reb.ImprimirEtiquetas(cantidadHojasImprimir);
+            ReemplazarEtiquetasBusiness reb = new ReemplazarEtiquetasBusiness(pathTemplate, pathTemplateActualizado);
+            reb.ReemplazarImprimir300Etiquetas(lista);
 
-            //double cantidadHojasImprimir = Math.Ceiling((double)31 / reb.CANTIDAD_ETIQUETAS_POR_HOJA);
-            Console.WriteLine(cantidadHojasImprimir.ToString());
+            Console.WriteLine("Se ejecuto correctamente!!!");
             Console.ReadKey();
         }
 
@@ -103,24 +104,30 @@ namespace LoadWordTemplate.Client
             try
             {
                 string pathWordTemplateCarta = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta.docx";
-                //string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\Secciones.docx";
                 string pathWordTemplateCarta300 = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta300.docx";
                 string pathWordTemplateCarta300Actualizado = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta300Actualizado.docx";
 
                 ReemplazarCartasBusiness rcb = new ReemplazarCartasBusiness(
                     pathWordTemplateCarta, pathWordTemplateCarta300, pathWordTemplateCarta300Actualizado);
-                
-                rcb.Reemplazar300Cartas(etiquetas);
 
-                //double cantidadHojasImprimir = Math.Ceiling((double)31 / reb.CANTIDAD_ETIQUETAS_POR_HOJA);
+                rcb.ReemplazarImprimir300Cartas(etiquetas);
+
                 Console.WriteLine("Se ejecuto correctamente!!!");
                 Console.ReadKey();
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
         }
+
+        private static void TestTemplateCarta()
+        {
+            string pathWordTemplateCarta = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta.docx";
+
+            ReemplazarCartasBusiness cartas = new ReemplazarCartasBusiness(pathWordTemplateCarta);
+            cartas.AbrirTemplateCarta();
+        }
+
     }
 }

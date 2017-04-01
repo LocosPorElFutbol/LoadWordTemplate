@@ -8,15 +8,34 @@ namespace LoadWordTemplate.Entities
 {
     public class CartaEntity
     {
-        public DateTime FechaCumpleanios { get; set; }
-        public string Titulo { get; set; }
-        public string NombreCompleto { get; set; }
-        public string Apellido { get; set; }
-        public string Direccion { get; set; }
-        public string Localidad { get; set; }
-        public string CodigoPostal { get; set; }
-        public string NombrePila { get; set; }
-        public string CuerpoCarta { get; set; }
+        private DateTime _FechaCumpleanios;
+        public DateTime FechaCumpleanios
+        { get { return _FechaCumpleanios; } set { _FechaCumpleanios = value; } }
+
+        private string _Titulo = string.Empty;
+        public string Titulo { get { return _Titulo; } set { _Titulo = value; } }
+
+        private string _NombreCompleto = string.Empty;
+        public string NombreCompleto { get { return _NombreCompleto; } set { _NombreCompleto = value; } }
+
+        private string _Apellido = string.Empty;
+        public string Apellido { get { return _Apellido; } set { _Apellido = value; } }
+
+        private string _Direccion = string.Empty;
+        public string Direccion { get { return _Direccion; } set { _Direccion = value; } }
+
+        private string _Localidad = string.Empty;
+        public string Localidad { get { return _Localidad; } set { _Localidad = value; } }
+
+        private string _CodigoPostal = string.Empty;
+        public string CodigoPostal { get { return _CodigoPostal; } set { _CodigoPostal = value; } }
+
+        private string _NombrePila = string.Empty;
+        public string NombrePila { get { return _NombrePila; } set { _NombrePila = value; } }
+
+        private string _CuerpoCarta = string.Empty;
+        public string CuerpoCarta { get { return _CuerpoCarta; } set { _CuerpoCarta = value; } }
+
         public string NombreCompletoApellido
         {
             get { return NombreCompleto + " " + Apellido; }
@@ -32,6 +51,21 @@ namespace LoadWordTemplate.Entities
         public string AnioCumpleanios
         {
             get { return FechaCumpleanios.Year.ToString(); }
+        }
+
+        /// <summary>
+        /// Este constructor se utiliza para eliminar los tags « », asignandoles " " a las propiedades de la clase.
+        /// </summary>
+        public CartaEntity()
+        {
+            _Titulo = " ";
+            _NombreCompleto = " ";
+            _Apellido = " ";
+            _Direccion = " ";
+            _Localidad = " ";
+            _CodigoPostal = " ";
+            _NombrePila = " ";
+            _CuerpoCarta = " ";
         }
     }
 }

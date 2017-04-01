@@ -10,7 +10,6 @@ namespace LoadWordTemplate.Business
     public class ReemplazarEtiquetasBusiness
     {
         private ReemplazarEtiquetasRepository reemplazarEtiquetasRepository = null;
-        public int CANTIDAD_ETIQUETAS_POR_HOJA = 30;
 
         public ReemplazarEtiquetasBusiness(string _pathTemplateWord, string _pathWordModificado)
         {
@@ -18,11 +17,11 @@ namespace LoadWordTemplate.Business
                 new ReemplazarEtiquetasRepository(_pathTemplateWord, _pathWordModificado);
         }
 
-        public void Reemplazar(List<CartaEntity> listaEtiquetas)
+        public void ReemplazarImprimir300Etiquetas(IEnumerable<CartaEntity> listaEtiquetas)
         {
             try
             {
-                reemplazarEtiquetasRepository.Reemplazar(listaEtiquetas);
+                reemplazarEtiquetasRepository.ReemplazarImprimir300Etiquetas(listaEtiquetas);
             }
             catch (Exception ex)
             {
@@ -30,16 +29,5 @@ namespace LoadWordTemplate.Business
             }
         }
 
-        public void ImprimirEtiquetas(double cantidadHojasAImprimir)
-        {
-            try
-            {
-                reemplazarEtiquetasRepository.ImprimirEtiquetas(cantidadHojasAImprimir);
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }        
-        }
     }
 }
