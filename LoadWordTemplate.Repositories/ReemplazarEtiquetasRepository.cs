@@ -52,6 +52,12 @@ namespace LoadWordTemplate.Repositories
                 //Eliminar secciones dependiendo de la cantidad de etiquetas
                 this.EliminarSecciones(wordDoc, cantidadHojas);
 
+                //Inserto etiquetas en blanco
+                var lista = (List<CartaEntity>)listaClientes;
+                int etiquetasEnBlanco = (this.CANTIDAD_ETIQUETAS_POR_HOJA * cantidadHojas) - listaClientes.Count();
+                for (int j = 0; j < etiquetasEnBlanco; j++)
+                    lista.Add(new CartaEntity());
+
                 //Reemplazo valores de la lista en las etiquetas
                 this.ReemplazarEtiquetas(wordApp, wordDoc, listaClientes);
 

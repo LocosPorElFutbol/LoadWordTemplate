@@ -79,9 +79,6 @@ namespace LoadWordTemplate.Client
             e.CodigoPostal = "1122";
             lista.Add(e);
 
-            for (int j = 0; j < 24; j++)
-                lista.Add(new CartaEntity());
-
             return lista;
         }
 
