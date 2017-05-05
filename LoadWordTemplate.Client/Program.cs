@@ -14,9 +14,9 @@ namespace LoadWordTemplate.Client
             try
             {
                 var e = Etiquetas();
-                TestEtiquetas();
-                //TestCartas(e);
-                //TestTemplateCarta();
+                //TestEtiquetas();
+                //TestAbrirTemplateCarta();
+                TestReemplazar300Cartas(e);
             }
             catch (Exception ex)
             {
@@ -63,6 +63,7 @@ namespace LoadWordTemplate.Client
             e.Direccion = "Siempreviva 742";
             e.Localidad = "Springfield";
             e.CodigoPostal = "222";
+            e.FechaCumpleanios = new DateTime(2000, 10, 25);
             lista.Add(e);
 
             e = new CartaEntity();
@@ -70,6 +71,7 @@ namespace LoadWordTemplate.Client
             e.Direccion = "La edad de piedra";
             e.Localidad = "NOSE";
             e.CodigoPostal = "0600";
+            e.FechaCumpleanios = new DateTime(2000, 10, 15);
             lista.Add(e);
 
             e = new CartaEntity();
@@ -77,6 +79,7 @@ namespace LoadWordTemplate.Client
             e.Direccion = "white 123";
             e.Localidad = "CABA";
             e.CodigoPostal = "1122";
+            e.FechaCumpleanios = new DateTime(2013, 07, 22);
             lista.Add(e);
 
             return lista;
@@ -96,7 +99,7 @@ namespace LoadWordTemplate.Client
             Console.ReadKey();
         }
 
-        private static void TestCartas(List<CartaEntity> etiquetas)
+        private static void TestReemplazar300Cartas(List<CartaEntity> etiquetas)
         {
             try
             {
@@ -118,7 +121,7 @@ namespace LoadWordTemplate.Client
             }
         }
 
-        private static void TestTemplateCarta()
+        private static void TestAbrirTemplateCarta()
         {
             string pathWordTemplateCarta = "C:\\Leo\\Dropbox\\Desarrollos\\Librerias\\TemplateWord\\Documentos\\Pruebas\\TemplateCarta.docx";
 
