@@ -15,8 +15,8 @@ namespace LoadWordTemplate.Entities
         private string _Titulo = string.Empty;
         public string Titulo { get { return _Titulo; } set { _Titulo = value; } }
 
-        private string _NombreCompleto = string.Empty;
-        public string NombreCompleto { get { return _NombreCompleto; } set { _NombreCompleto = value; } }
+        private string _Nombre = string.Empty;
+        public string Nombre { get { return _Nombre; } set { _Nombre = value; } }
 
         private string _Apellido = string.Empty;
         public string Apellido { get { return _Apellido; } set { _Apellido = value; } }
@@ -33,12 +33,12 @@ namespace LoadWordTemplate.Entities
         private string _NombrePila = string.Empty;
         public string NombrePila { get { return _NombrePila; } set { _NombrePila = value; } }
 
-        private string _CuerpoCarta = string.Empty;
-        public string CuerpoCarta { get { return _CuerpoCarta; } set { _CuerpoCarta = value; } }
+        private string[] _CuerpoCarta = null;
+        public string[] CuerpoCarta { get { return _CuerpoCarta; } set { _CuerpoCarta = value; } }
 
         public string NombreCompletoApellido
         {
-            get { return NombreCompleto + " " + Apellido; }
+            get { return Nombre + " " + Apellido; }
         }
         public string DiaCumpleanios
         {
@@ -59,13 +59,13 @@ namespace LoadWordTemplate.Entities
         public CartaEntity()
         {
             _Titulo = " ";
-            _NombreCompleto = " ";
+            _Nombre = " ";
             _Apellido = " ";
             _Direccion = " ";
             _Localidad = " ";
             _CodigoPostal = " ";
             _NombrePila = " ";
-            _CuerpoCarta = " ";
+            _CuerpoCarta = null;
         }
     }
 }

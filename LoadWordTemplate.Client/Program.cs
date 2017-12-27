@@ -14,9 +14,14 @@ namespace LoadWordTemplate.Client
             try
             {
                 var e = Etiquetas();
+                //OLD
                 //TestEtiquetas();
                 //TestAbrirTemplateCarta();
-                TestReemplazar300Cartas(e);
+                //TestReemplazar300Cartas(e);
+
+                //NEW
+                //CrearCartas(e);
+                CrearEtiquetas(e);
             }
             catch (Exception ex)
             {
@@ -26,60 +31,77 @@ namespace LoadWordTemplate.Client
 
         private static List<CartaEntity> Etiquetas()
         {
+            string cuerpoCarta = "\tEs bueno observar la actitud de los pájaros ante la adversidad, pasan días y días haciendo su nido y recogiendo materiales, muchos de estos traídos desde largas distancias, y cuando ya está terminado y listo para poner los huevos, las inclemencias del tiempo, la mano del hombre o la obra de algún animal, destruye y tira por el suelo lo que con tanto esfuerzo se logró.  ¿Qué hace el pájaro?  ¿Se lamenta, se paraliza, abandona la tarea?  … De ninguna manera!!!  VUELVE A EMPEZAR, una y otra vez hasta que en el nido aparecen los primeros huevos.  A veces, muchas veces, antes de que nazcan los pichones, algún animal o una tormenta vuelve a destruir el nido, pero esta vez con su precioso contenido. Aún así el pájaro jamás retrocede, sigue construyendo, y nunca deja de cantar.\r\n\r\n\tHoy empieza un nuevo año en tu vida ¿Sentiste alguna vez que tu vida, tu trabajo, tu familia, tus amigos no son lo que soñaste?  ¿Te dieron ganas de decir ¡Basta!, no vale la pena el esfuerzo, esto es demasiado para mí?  ¿Muchas veces te cansaste de volver a empezar, del desgaste de la lucha diaria, de la confianza traicionada, de las metas no alcanzadas cuando estabas a punto de lograrlo?\r\n\r\n\tPor más que la vida te golpee, no te entregues nunca.  No te preocupes si en la batalla sufrís alguna herida, es de esperar que algo así suceda.  Junta los pedazos de tu esperanza, ármala de nuevo y volvé a empezar.  No importa lo que pase, no aflojes, dale para adelante.  La vida es un desafío constante, pero vale la pena aceptarlo y sobre todo NUNCA DEJES DE CANTAR.";
+
             List<CartaEntity> lista = new List<CartaEntity>();
 
             CartaEntity e = new CartaEntity();
             e.Titulo = "Sr.";
             e.NombrePila = "Leito";
-            e.NombreCompleto = "Leonardo E. Choque Rodriguez";
+            e.Nombre = "Leonardo Elvio";
+            e.Apellido = "Choque Rodriguez";
             e.Direccion = "Calderon de la barca 2148, 7 E";
             e.Localidad = "CABA";
             e.CodigoPostal = "1407";
             e.FechaCumpleanios = new DateTime(1984, 4, 19);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             e = new CartaEntity();
             e.Titulo = "Sr.";
             e.NombrePila = "José";
-            e.NombreCompleto = "Don Jose de San Martin";
+            e.Nombre = "Don Jose";
+            e.Apellido = "de San Martin";
             e.Direccion = "alicante 1022";
             e.Localidad = "caba";
             e.CodigoPostal = "123";
             e.FechaCumpleanios = new DateTime(1778, 2, 25);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             e = new CartaEntity();
             e.Titulo = "Sra.";
             e.NombrePila = "Barto";
-            e.NombreCompleto = "bart simpson";
+            e.Nombre = "bartolomeo";
+            e.Apellido = "J Simpson";
             e.Direccion = "siempre viva 742";
             e.Localidad = "springfield";
             e.CodigoPostal = "777";
             e.FechaCumpleanios = new DateTime(2000, 10, 25);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             e = new CartaEntity();
-            e.NombreCompleto = "Homero Simpson";
+            e.Titulo = "Sra.";
+            e.Nombre = "Homero J";
+            e.Apellido = "Simpson";
             e.Direccion = "Siempreviva 742";
             e.Localidad = "Springfield";
             e.CodigoPostal = "222";
             e.FechaCumpleanios = new DateTime(2000, 10, 25);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             e = new CartaEntity();
-            e.NombreCompleto = "Pedro Picapiedra";
+            e.Titulo = "Sra.";
+            e.Nombre = "Pedro";
+            e.Apellido = "Picapiedra";
             e.Direccion = "La edad de piedra";
             e.Localidad = "NOSE";
             e.CodigoPostal = "0600";
             e.FechaCumpleanios = new DateTime(2000, 10, 15);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             e = new CartaEntity();
-            e.NombreCompleto = "Marulo Hernandez";
+            e.Titulo = "Sr.";
+            e.Nombre = "Marulo";
+            e.Apellido = "Hernandez";
             e.Direccion = "white 123";
             e.Localidad = "CABA";
             e.CodigoPostal = "1122";
             e.FechaCumpleanios = new DateTime(2013, 07, 22);
+            e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
             return lista;
@@ -129,5 +151,31 @@ namespace LoadWordTemplate.Client
             cartas.AbrirTemplateCarta();
         }
 
+
+        private static void CrearCartas(IEnumerable<CartaEntity> cartas)
+        {
+            try
+            {
+                CumpleaniosCartaBusiness cartaCumpleaniosBusiness = new CumpleaniosCartaBusiness("C:\\pruebaCartas.pdf");
+                cartaCumpleaniosBusiness.CrearCartasCumpleanios(cartas);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        private static void CrearEtiquetas(IEnumerable<CartaEntity> cartas)
+        {
+            try
+            {
+                CumpleaniosEtiquetaBusiness cumpleaniosEtiquetaBusiness = new CumpleaniosEtiquetaBusiness("C:\\pruebaEtiquetas.pdf");
+                cumpleaniosEtiquetaBusiness.CrearEtiquetas(cartas);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }
