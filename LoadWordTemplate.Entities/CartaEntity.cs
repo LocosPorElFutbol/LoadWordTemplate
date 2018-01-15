@@ -54,18 +54,19 @@ namespace LoadWordTemplate.Entities
         }
 
         /// <summary>
-        /// Este constructor se utiliza para eliminar los tags « », asignandoles " " a las propiedades de la clase.
+        /// Este constructor se utiliza para las etiquetas que no son multiplo de 3.
         /// </summary>
         public CartaEntity()
         {
-            _Titulo = " ";
-            _Nombre = " ";
-            _Apellido = " ";
-            _Direccion = " ";
-            _Localidad = " ";
-            _CodigoPostal = " ";
-            _NombrePila = " ";
-            _CuerpoCarta = null;
+            _Titulo = string.Empty;
+            _NombrePila = string.Empty;
+            _Nombre = string.Empty;
+            _Apellido = string.Empty;
+            _Direccion = string.Empty;
+            _Localidad = string.Empty;
+            _CodigoPostal = string.Empty;
+            _FechaCumpleanios = new DateTime(1900, 01, 01);
+            _CuerpoCarta = new string[0];
         }
     }
 }

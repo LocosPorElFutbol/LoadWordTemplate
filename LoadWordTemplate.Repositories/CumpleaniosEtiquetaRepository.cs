@@ -23,6 +23,8 @@ namespace LoadWordTemplate.Repositories
         {
             try
             {
+                listaCartas = ValidarCantidadEtiquetas(listaCartas);
+
                 // Creamos el documento con el tamaño de página tradicional
                 Document doccumentoPdf = new Document(PageSize.LETTER, 0f, 0f, 0f, 0f);
                 // Indicamos donde vamos a guardar el documento
@@ -86,7 +88,7 @@ namespace LoadWordTemplate.Repositories
                     cellDireccion = new PdfPCell(new Phrase(carta.Direccion, _standardFont));
                     cellDireccion.BorderWidth = ANCHO_TABLA;
 
-                    cellCodigoPostal = new PdfPCell(new Phrase(carta.Localidad + ", " + carta.CodigoPostal, _standardFont));
+                    cellCodigoPostal = new PdfPCell(new Phrase(carta.Localidad + carta.CodigoPostal, _standardFont));
                     cellCodigoPostal.BorderWidth = ANCHO_TABLA;
 
                     tablaEtiqueta.AddCell(cellNombre);
@@ -110,6 +112,19 @@ namespace LoadWordTemplate.Repositories
                 throw ex;
             }
 
+        }
+        private IEnumerable<CartaEntity> ValidarCantidadEtiquetas(IEnumerable<CartaEntity> listaCartas)
+        {
+            List<CartaEntity> lista = (List<CartaEntity>)listaCartas;
+
+            double promedio = (double)listaCartas.Count() / 3;
+            int etiquetasMultiploDeTres = (int)Math.Ceiling(promedio) * 3;
+            int cantidadDeEtiquetasAAgregar = etiquetasMultiploDeTres - listaCartas.Count();
+
+            for (int i = 0; i < cantidadDeEtiquetasAAgregar; i++)
+                lista.Add(new CartaEntity());
+
+            return lista;
         }
 
     }

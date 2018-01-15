@@ -21,7 +21,10 @@ namespace LoadWordTemplate.Client
 
                 //NEW
                 //CrearCartas(e);
+                
+                
                 CrearEtiquetas(e);
+                
             }
             catch (Exception ex)
             {
@@ -104,6 +107,17 @@ namespace LoadWordTemplate.Client
             e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
+            e = new CartaEntity();
+            e.Titulo = "Sr.";
+            e.Nombre = "Jonhy";
+            e.Apellido = "Melaslavo";
+            e.Direccion = "calle falsa 321";
+            e.Localidad = "CABA";
+            e.CodigoPostal = "1415";
+            e.FechaCumpleanios = new DateTime(2013, 07, 22);
+            e.CuerpoCarta = new[] { cuerpoCarta };
+            lista.Add(e);
+
             return lista;
         }
 
@@ -177,5 +191,6 @@ namespace LoadWordTemplate.Client
                 throw ex;
             }
         }
+
     }
 }
