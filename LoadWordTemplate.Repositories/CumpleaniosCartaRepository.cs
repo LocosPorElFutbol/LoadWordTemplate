@@ -14,6 +14,7 @@ namespace LoadWordTemplate.Repositories
         //Install-Package iTextSharp -Version 5.5.12
 
         private string pathSalidaDocumentoPdf = string.Empty;
+        private const float ANCHO_TABLA = 0.0f;
 
         public CumpleaniosCartaRepository(string _pathSalidaDocumentoPdf)
         {
@@ -38,7 +39,7 @@ namespace LoadWordTemplate.Repositories
                 doccumentoPdf.Open();
 
                 foreach (CartaEntity carta in ListaCartas)
-                { 
+                {
                     PdfPTable tblPrueba = ArmarTablaCarta(carta);
                     doccumentoPdf.Add(tblPrueba);
                     doccumentoPdf.Add(Chunk.NEXTPAGE);
@@ -56,178 +57,143 @@ namespace LoadWordTemplate.Repositories
         }
         private PdfPTable ArmarTablaCarta(CartaEntity carta)
         {
-            iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 12, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            //iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             PdfPCell cellColSpan = null;
 
             // Creamos una tabla que contendrá las columnas divisoras de la carta
-            PdfPTable tblPrueba = new PdfPTable(3);
-            tblPrueba.WidthPercentage = 100;
+            PdfPTable tablaCarta = new PdfPTable(3);
+            tablaCarta.WidthPercentage = 100;
+            //sacar bordes de la tabla principal
+            tablaCarta.DefaultCell.Border = Rectangle.NO_BORDER;
 
             // Configuramos el título de las columnas de la tabla
-            string fecha = carta.DiaCumpleanios + " de " + carta.MesCumpleanios + " de " + carta.AnioCumpleanios + ".";
+            string fecha = carta.DiaCumpleanios + " de " + carta.MesCumpleanios + " de " + DateTime.Now.Year + ".";
             PdfPCell cellFecha = new PdfPCell(new Phrase("Ciudad Autónoma de Buenos Aires, " + fecha, _standardFontEncabezado));
             cellFecha.Colspan = 3;
             cellFecha.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-            cellFecha.BorderWidth = 0.1f;
-            cellFecha.BorderWidthBottom = 0.1f;
+            cellFecha.BorderWidth = ANCHO_TABLA;
 
             // Añadimos las celdas a la tabla
-            tblPrueba.AddCell(cellFecha);
+            tablaCarta.AddCell(cellFecha);
 
-            // Inserto lineas en blanco
-            for (int i = 0; i <= 2; i++)
-            {
-                PdfPCell cellLineaBlanco = null;
-                cellLineaBlanco = new PdfPCell(new Phrase(Chunk.NEWLINE));
-                cellFecha.Colspan = 3;
-                cellFecha.BorderWidth = 0.1f;
-                cellFecha.BorderWidthBottom = 0.1f;
-                // Añadimos las celdas a la tabla
-                tblPrueba.AddCell(cellLineaBlanco);
-            }
+            // Inserto linea en blanco
+            PdfPCell cellLineaBlanco = null;
+            cellLineaBlanco = new PdfPCell(new Phrase(Chunk.NEWLINE));
+            cellLineaBlanco.Colspan = 3;
+            cellLineaBlanco.Border = Rectangle.NO_BORDER;
+            tablaCarta.AddCell(cellLineaBlanco);
 
             // Titulo
             PdfPCell cellTitulo = new PdfPCell(new Phrase(carta.Titulo, _standardFontEncabezado));
-            cellTitulo.BorderWidth = 0.1f;
-            cellTitulo.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellTitulo);
+            cellTitulo.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellTitulo);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // NombreApellido
             PdfPCell cellNombreApellido = new PdfPCell(new Phrase(carta.NombreCompletoApellido, _standardFontEncabezado));
-            cellNombreApellido.BorderWidth = 0.1f;
-            cellNombreApellido.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellNombreApellido);
+            cellNombreApellido.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellNombreApellido);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Direccion
             PdfPCell cellDireccion = new PdfPCell(new Phrase(carta.Direccion, _standardFontEncabezado));
-            cellDireccion.BorderWidth = 0.1f;
-            cellDireccion.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellDireccion);
+            cellDireccion.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellDireccion);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Localidad y CP
-            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.Localidad + " "  + carta.CodigoPostal, _standardFontEncabezado));
-            cellLocalidadCP.BorderWidth = 0.1f;
-            cellLocalidadCP.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellLocalidadCP);
+            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.Localidad + " " + carta.CodigoPostal, _standardFontEncabezado));
+            cellLocalidadCP.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellLocalidadCP);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Inserto 2 lineas en blanco
-            for (int i = 0; i <= 1; i++)
-            {
-                PdfPCell cellLineaBlanco = null;
-                cellLineaBlanco = new PdfPCell(new Phrase(Chunk.NEWLINE));
-                cellLineaBlanco.Colspan = 3;
-                cellFecha.BorderWidth = 0.1f;
-                cellFecha.BorderWidthBottom = 0.1f;
-                // Añadimos las celdas a la tabla
-                tblPrueba.AddCell(cellLineaBlanco);
-            }
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
 
             // Saludo
             string saludo = "Hola " + carta.NombrePila + ":";
             PdfPCell cellHola = new PdfPCell(new Phrase(saludo, _standardFontEncabezado));
-            cellHola.BorderWidth = 0.1f;
-            cellHola.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellHola);
+            cellHola.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellHola);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Cuerpo mensaje
             //PdfPCell cellCuerpo = new PdfPCell(this.ObtenerParrafo("txbCuerpo.Text"));
-            PdfPCell cellCuerpo = new PdfPCell(this.ObtenerParrafo(carta.CuerpoCarta));
+            PdfPCell cellCuerpo = new PdfPCell(this.ObtenerParrafo(carta.CuerpoCarta, _standardFontEncabezado));
             cellCuerpo.Colspan = 3;
-            cellCuerpo.BorderWidth = 0.1f;
-            cellCuerpo.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellCuerpo);
+
+            cellCuerpo.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellCuerpo);
 
             // Inserto 3 lineas en blanco
-            for (int i = 0; i <= 1; i++)
-            {
-                PdfPCell cellLineaBlanco = null;
-                cellLineaBlanco = new PdfPCell(new Phrase(Chunk.NEWLINE));
-                cellLineaBlanco.Colspan = 3;
-                cellFecha.BorderWidth = 0.1f;
-                cellFecha.BorderWidthBottom = 0.1f;
-                // Añadimos las celdas a la tabla
-                tblPrueba.AddCell(cellLineaBlanco);
-            }
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
 
             //dos celdas en blanco firma
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Puntos firma
             PdfPCell cellPuntos = new PdfPCell(new Phrase("....................................", _standardFontEncabezado));
             cellPuntos.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            cellPuntos.BorderWidth = 0.1f;
-            cellPuntos.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellPuntos);
+            cellPuntos.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellPuntos);
 
             //dos celdas en blanco firma
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // Ruben
             PdfPCell cellRuben = new PdfPCell(new Phrase("RUBEN VIEYRA", _standardFontEncabezado));
             cellRuben.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            cellRuben.BorderWidth = 0.1f;
-            cellRuben.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellRuben);
-
+            cellRuben.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellRuben);
 
             //dos celdas en blanco firma
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
             cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = 0.1f;
-            cellColSpan.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellColSpan);
+            cellColSpan.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellColSpan);
 
             // mensaje final
             PdfPCell cellPie = new PdfPCell(new Phrase(this.GetPie(), _standardFontEncabezado));
             cellPie.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            cellPie.BorderWidth = 0.1f;
-            cellPie.BorderWidthBottom = 0.1f;
-            tblPrueba.AddCell(cellPie);
-            return tblPrueba;
+            cellPie.BorderWidth = ANCHO_TABLA;
+            tablaCarta.AddCell(cellPie);
+            return tablaCarta;
         }
 
-        private Paragraph ObtenerParrafo(string[] lineas)
+        private Paragraph ObtenerParrafo(string[] lineas, iTextSharp.text.Font fuente)
         {
             Paragraph parrafo = new Paragraph();
+            parrafo.Font = fuente;
             try
             {
                 bool primerlinea = true;

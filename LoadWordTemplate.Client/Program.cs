@@ -20,10 +20,8 @@ namespace LoadWordTemplate.Client
                 //TestReemplazar300Cartas(e);
 
                 //NEW
-                //CrearCartas(e);
-                
-                
-                CrearEtiquetas(e);
+                CrearCartas(e);
+                //CrearEtiquetas(e);
                 
             }
             catch (Exception ex)
@@ -164,7 +162,6 @@ namespace LoadWordTemplate.Client
             ReemplazarCartasBusiness cartas = new ReemplazarCartasBusiness(pathWordTemplateCarta);
             cartas.AbrirTemplateCarta();
         }
-
 
         private static void CrearCartas(IEnumerable<CartaEntity> cartas)
         {
