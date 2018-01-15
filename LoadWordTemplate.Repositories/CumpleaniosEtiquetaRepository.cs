@@ -88,7 +88,7 @@ namespace LoadWordTemplate.Repositories
                     cellDireccion = new PdfPCell(new Phrase(carta.Direccion, _standardFont));
                     cellDireccion.BorderWidth = ANCHO_TABLA;
 
-                    cellCodigoPostal = new PdfPCell(new Phrase(carta.Localidad + carta.CodigoPostal, _standardFont));
+                    cellCodigoPostal = new PdfPCell(new Phrase(carta.Localidad + " " + carta.CodigoPostal, _standardFont));
                     cellCodigoPostal.BorderWidth = ANCHO_TABLA;
 
                     tablaEtiqueta.AddCell(cellNombre);
