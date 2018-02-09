@@ -114,8 +114,8 @@ namespace LoadWordTemplate.Repositories
             cellColSpan.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellColSpan);
 
-            // Localidad y CP
-            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.Localidad + " " + carta.CodigoPostal, _standardFontEncabezado));
+            // CP, localidad y provincia
+            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.CodigoPostal + " - " + carta.Localidad + ", " + carta.Provincia , _standardFontEncabezado));
             cellLocalidadCP.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellLocalidadCP);
 

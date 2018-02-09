@@ -41,6 +41,7 @@ namespace LoadWordTemplate.Client
             e.NombrePila = "Leito";
             e.Nombre = "Leonardo Elvio";
             e.Apellido = "Choque Rodriguez";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
             e.Direccion = "Calderon de la barca 2148, 7 E";
             e.Localidad = "CABA";
             e.CodigoPostal = "1407";
@@ -55,6 +56,7 @@ namespace LoadWordTemplate.Client
             e.Apellido = "de San Martin";
             e.Direccion = "alicante 1022";
             e.Localidad = "caba";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
             e.CodigoPostal = "123";
             e.FechaCumpleanios = new DateTime(1778, 2, 25);
             e.CuerpoCarta = new[] { cuerpoCarta };
@@ -66,6 +68,7 @@ namespace LoadWordTemplate.Client
             e.Nombre = "bartolomeo";
             e.Apellido = "J Simpson";
             e.Direccion = "siempre viva 742";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
             e.Localidad = "springfield";
             e.CodigoPostal = "777";
             e.FechaCumpleanios = new DateTime(2000, 10, 25);
@@ -77,6 +80,7 @@ namespace LoadWordTemplate.Client
             e.Nombre = "Homero J";
             e.Apellido = "Simpson";
             e.Direccion = "Siempreviva 742";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
             e.Localidad = "Springfield";
             e.CodigoPostal = "222";
             e.FechaCumpleanios = new DateTime(2000, 10, 25);
@@ -89,6 +93,7 @@ namespace LoadWordTemplate.Client
             e.Apellido = "Picapiedra";
             e.Direccion = "La edad de piedra";
             e.Localidad = "NOSE";
+            e.Provincia = "Cordoba";
             e.CodigoPostal = "0600";
             e.FechaCumpleanios = new DateTime(2000, 10, 15);
             e.CuerpoCarta = new[] { cuerpoCarta };
@@ -100,6 +105,7 @@ namespace LoadWordTemplate.Client
             e.Apellido = "Hernandez";
             e.Direccion = "white 123";
             e.Localidad = "CABA";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
             e.CodigoPostal = "1122";
             e.FechaCumpleanios = new DateTime(2013, 07, 22);
             e.CuerpoCarta = new[] { cuerpoCarta };

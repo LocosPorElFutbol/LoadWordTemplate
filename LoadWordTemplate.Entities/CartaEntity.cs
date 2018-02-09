@@ -27,6 +27,9 @@ namespace LoadWordTemplate.Entities
         private string _Localidad = string.Empty;
         public string Localidad { get { return _Localidad; } set { _Localidad = value; } }
 
+        private string _Provincia = string.Empty;
+        public string Provincia { get { return _Provincia; } set { _Provincia = value; } }
+
         private string _CodigoPostal = string.Empty;
         public string CodigoPostal { get { return _CodigoPostal; } set { _CodigoPostal = value; } }
 
@@ -64,6 +67,7 @@ namespace LoadWordTemplate.Entities
             _Apellido = string.Empty;
             _Direccion = string.Empty;
             _Localidad = string.Empty;
+            _Provincia = string.Empty;
             _CodigoPostal = string.Empty;
             _FechaCumpleanios = new DateTime(1900, 01, 01);
             _CuerpoCarta = new string[0];
