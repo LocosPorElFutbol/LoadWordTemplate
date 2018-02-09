@@ -72,6 +72,29 @@ namespace LoadWordTemplate.Entities
             _FechaCumpleanios = new DateTime(1900, 01, 01);
             _CuerpoCarta = new string[0];
         }
+
+        public CartaEntity(string pTitulo,
+            string pNombrePila,
+            string pNombre,
+            string pApellido,
+            string pDireccion,
+            string pLocalidad,
+            string pProvincia,
+            string pCodigoPostal,
+            DateTime pFechaCumpleanios,
+            string[] pCuerpoCarta)
+        {
+            _Titulo = pTitulo;
+            _NombrePila = pNombrePila;
+            _Nombre = pNombre;
+            _Apellido = pApellido;
+            _Direccion = pDireccion;
+            _Localidad = string.IsNullOrEmpty(pLocalidad) ? string.Empty : " - " + pLocalidad + ", ";
+            _Provincia = pProvincia;
+            _CodigoPostal = pCodigoPostal;
+            _FechaCumpleanios = pFechaCumpleanios;
+            _CuerpoCarta = pCuerpoCarta;
+        }
     }
 }
 
