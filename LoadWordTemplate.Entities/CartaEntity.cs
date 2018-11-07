@@ -39,10 +39,22 @@ namespace LoadWordTemplate.Entities
         private string[] _CuerpoCarta = null;
         public string[] CuerpoCarta { get { return _CuerpoCarta; } set { _CuerpoCarta = value; } }
 
-        public string NombreCompletoApellido
+        public string NombreApellido
         {
             get { return Nombre + " " + Apellido; }
         }
+
+        public string CPLocalidadProvincia
+        {
+            get
+            {
+                if (Localidad.ToUpper().Equals("CABA"))
+                    return string.Format("CP {0}, {1}", CodigoPostal, Localidad);
+                else
+                    return string.Format("CP {0}, {1}, {2}", CodigoPostal, Localidad, Provincia);
+            }
+        }
+
         public string DiaCumpleanios
         {
             get { return FechaCumpleanios.Day.ToString(); }
@@ -89,7 +101,7 @@ namespace LoadWordTemplate.Entities
             _Nombre = pNombre;
             _Apellido = pApellido;
             _Direccion = pDireccion;
-            _Localidad = string.IsNullOrEmpty(pLocalidad) ? string.Empty : " - " + pLocalidad + ", ";
+            _Localidad = pLocalidad;
             _Provincia = pProvincia;
             _CodigoPostal = pCodigoPostal;
             _FechaCumpleanios = pFechaCumpleanios;

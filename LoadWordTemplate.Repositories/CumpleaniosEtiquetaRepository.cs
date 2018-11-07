@@ -12,6 +12,7 @@ namespace LoadWordTemplate.Repositories
     public class CumpleaniosEtiquetaRepository
     {
         private const float ANCHO_TABLA = 0.0f;
+        private const string SALTO_LINEA = "\r\n";
 
         private string pathDocumentoPdf = string.Empty;
         public CumpleaniosEtiquetaRepository(string _pathDocumentoPdf)
@@ -26,10 +27,9 @@ namespace LoadWordTemplate.Repositories
                 listaCartas = ValidarCantidadEtiquetas(listaCartas);
 
                 // Creamos el documento con el tamaño de página tradicional
-                Document doccumentoPdf = new Document(PageSize.LETTER, 0f, 0f, 0f, 0f);
+                Document doccumentoPdf = new Document(PageSize.LETTER, 14.17f, 14.17f, 34.02f, 34.02f);
                 // Indicamos donde vamos a guardar el documento
-                PdfWriter writer = PdfWriter.GetInstance(doccumentoPdf,
-                                            new FileStream(this.pathDocumentoPdf, FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(doccumentoPdf, new FileStream(this.pathDocumentoPdf, FileMode.Create));
 
                 // Le colocamos el título y el autor
                 // **Nota: Esto no será visible en el documento
@@ -39,64 +39,28 @@ namespace LoadWordTemplate.Repositories
                 doccumentoPdf.Open();
 
                 //Defino fuentes
-                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 8, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-                iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 1, iTextSharp.text.Font.NORMAL, BaseColor.WHITE);
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
 
                 // Creamos una tabla que contendrá las etiquetas en 3 columnas 
                 PdfPTable tablaEtiquetas = new PdfPTable(3);
                 tablaEtiquetas.WidthPercentage = 100;
-                //Sacar bordes de la tabla principal
-                tablaEtiquetas.DefaultCell.Border = Rectangle.NO_BORDER;
-
-                // Configuramos el título de las columnas de la tabla
-                PdfPCell columna1 = new PdfPCell(new Phrase("", _standardFontEncabezado));
-                columna1.BorderWidth = ANCHO_TABLA;
-                //columna1.BorderWidthBottom = ANCHO_TABLA;
-
-                PdfPCell columna2 = new PdfPCell(new Phrase("", _standardFontEncabezado));
-                columna2.BorderWidth = ANCHO_TABLA;
-                //columna2.BorderWidthBottom = ANCHO_TABLA;
-
-                PdfPCell columna3 = new PdfPCell(new Phrase("", _standardFontEncabezado));
-                columna3.BorderWidth = ANCHO_TABLA;
-                //columna3.BorderWidthBottom = ANCHO_TABLA;
-
-                // Añadimos las celdas a la tabla
-                tablaEtiquetas.AddCell(columna1);
-                tablaEtiquetas.AddCell(columna2);
-                tablaEtiquetas.AddCell(columna3);
 
                 //************************* Tabla de etiquetas *************************
-                PdfPTable tablaEtiqueta = null;
-                PdfPCell cellNombre = null;
-                PdfPCell cellApellido = null;
-                PdfPCell cellDireccion = null;
-                PdfPCell cellCodigoPostal = null;
+                PdfPCell cellEtiqueta = null;
 
                 foreach (CartaEntity carta in listaCartas)
                 {
-                    tablaEtiqueta = new PdfPTable(1);
-                    tablaEtiqueta.WidthPercentage = 100;
+                    string textoEtiqueta = carta.NombreApellido + SALTO_LINEA;
+                    textoEtiqueta += carta.Direccion + SALTO_LINEA;
+                    textoEtiqueta += carta.CPLocalidadProvincia;
 
                     //Agrego filas en la tabla de etiquetas
-                    cellNombre = new PdfPCell(new Phrase(carta.Nombre, _standardFont));
-                    cellNombre.BorderWidth = ANCHO_TABLA;
+                    cellEtiqueta = new PdfPCell(new Phrase(textoEtiqueta, _standardFont));
+                    cellEtiqueta.Padding = 8.5f;
+                    cellEtiqueta.FixedHeight = 72.01f;//25.49mm
+                    cellEtiqueta.BorderWidth = ANCHO_TABLA;
 
-                    cellApellido = new PdfPCell(new Phrase(carta.Apellido, _standardFont));
-                    cellApellido.BorderWidth = ANCHO_TABLA;
-
-                    cellDireccion = new PdfPCell(new Phrase(carta.Direccion, _standardFont));
-                    cellDireccion.BorderWidth = ANCHO_TABLA;
-
-                    cellCodigoPostal = new PdfPCell(new Phrase(carta.CodigoPostal + carta.Localidad + carta.Provincia, _standardFont));
-                    cellCodigoPostal.BorderWidth = ANCHO_TABLA;
-
-                    tablaEtiqueta.AddCell(cellNombre);
-                    tablaEtiqueta.AddCell(cellApellido);
-                    tablaEtiqueta.AddCell(cellDireccion);
-                    tablaEtiqueta.AddCell(cellCodigoPostal);
-
-                    tablaEtiquetas.AddCell(tablaEtiqueta);
+                    tablaEtiquetas.AddCell(cellEtiqueta);
                 }
 
                 // Finalmente, añadimos la tabla al documento PDF y cerramos el documento
@@ -127,5 +91,16 @@ namespace LoadWordTemplate.Repositories
             return lista;
         }
 
+        /// <summary>
+        /// Convierte a valores float la medida en milimetros (no se esta utilizando, en caso de requerirlo, aplicarlo.)
+        /// </summary>
+        /// <param name="milimetros">Valor en milimetros a convertir</param>
+        /// <returns>float equivalente a la medida pdfpcell</returns>
+        private float ConvertMMtoFloatPdfpSize(int milimetros)
+        {
+            // Referencia de medidas f-mm: 70.0f = 24.69mm
+            float mmResult = (milimetros * 70) / 24.69f;
+            return float.Parse(mmResult.ToString("F"));
+        }
     }
 }

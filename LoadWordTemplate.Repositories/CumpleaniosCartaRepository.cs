@@ -95,7 +95,7 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellColSpan);
 
             // NombreApellido
-            PdfPCell cellNombreApellido = new PdfPCell(new Phrase(carta.NombreCompletoApellido, _standardFontEncabezado));
+            PdfPCell cellNombreApellido = new PdfPCell(new Phrase(carta.NombreApellido, _standardFontEncabezado));
             cellNombreApellido.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellNombreApellido);
 
@@ -115,7 +115,7 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellColSpan);
 
             // CP, localidad y provincia
-            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.CodigoPostal + carta.Localidad + carta.Provincia , _standardFontEncabezado));
+            PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.CPLocalidadProvincia, _standardFontEncabezado));
             cellLocalidadCP.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellLocalidadCP);
 

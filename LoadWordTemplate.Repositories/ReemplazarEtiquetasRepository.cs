@@ -133,7 +133,7 @@ namespace LoadWordTemplate.Repositories
                             if (fieldName == "NombreCompletoApellido" + i.ToString())
                             {
                                 myMergeField.Select();
-                                wordApp.Selection.TypeText(obj.NombreCompletoApellido);
+                                wordApp.Selection.TypeText(obj.NombreApellido);
                                 j++;
                             }
                             if (fieldName == "Direccion" + i.ToString())

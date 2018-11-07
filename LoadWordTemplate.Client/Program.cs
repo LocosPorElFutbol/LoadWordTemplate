@@ -41,9 +41,9 @@ namespace LoadWordTemplate.Client
             e.NombrePila = "Leito";
             e.Nombre = "Leonardo Elvio";
             e.Apellido = "Choque Rodriguez";
-            e.Provincia = "Ciudad autónoma de buenos aires.";
+            e.Provincia = "Santiago del Estero.";
             e.Direccion = "Calderon de la barca 2148, 7 E";
-            e.Localidad = "CABA";
+            e.Localidad = "Alguno que sea recontra requete largo para ver que onda.";
             e.CodigoPostal = "1407";
             e.FechaCumpleanios = new DateTime(1984, 4, 19);
             e.CuerpoCarta = new[] { cuerpoCarta };
@@ -111,17 +111,19 @@ namespace LoadWordTemplate.Client
             e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
-            e = new CartaEntity();
-            e.Titulo = "Sr.";
-            e.Nombre = "Jonhy";
-            e.Apellido = "Melaslavo";
-            e.Direccion = "calle falsa 321";
-            e.Localidad = "CABA";
-            e.CodigoPostal = "1415";
-            e.FechaCumpleanios = new DateTime(2013, 07, 22);
-            e.CuerpoCarta = new[] { cuerpoCarta };
-            lista.Add(e);
-
+            for (int i = 0; i < 50; i++)
+            {
+                e = new CartaEntity();
+                e.Titulo = "Sr.";
+                e.Nombre = "Jonhy";
+                e.Apellido = "Melaslavo";
+                e.Direccion = "calle falsa 321";
+                e.Localidad = "CABA";
+                e.CodigoPostal = "1415";
+                e.FechaCumpleanios = new DateTime(2013, 07, 22);
+                e.CuerpoCarta = new[] { cuerpoCarta };
+                lista.Add(e);
+            }
             return lista;
         }
 
@@ -173,7 +175,7 @@ namespace LoadWordTemplate.Client
         {
             try
             {
-                CumpleaniosCartaBusiness cartaCumpleaniosBusiness = new CumpleaniosCartaBusiness("C:\\pruebaCartas.pdf");
+                CumpleaniosCartaBusiness cartaCumpleaniosBusiness = new CumpleaniosCartaBusiness("C:\\Leo\\pruebaCartas.pdf");
                 cartaCumpleaniosBusiness.CrearCartasCumpleanios(cartas);
             }
             catch (Exception ex)
@@ -186,7 +188,7 @@ namespace LoadWordTemplate.Client
         {
             try
             {
-                CumpleaniosEtiquetaBusiness cumpleaniosEtiquetaBusiness = new CumpleaniosEtiquetaBusiness("C:\\pruebaEtiquetas.pdf");
+                CumpleaniosEtiquetaBusiness cumpleaniosEtiquetaBusiness = new CumpleaniosEtiquetaBusiness("C:\\Leo\\pruebaEtiquetas.pdf");
                 cumpleaniosEtiquetaBusiness.CrearEtiquetas(cartas);
             }
             catch (Exception ex)
