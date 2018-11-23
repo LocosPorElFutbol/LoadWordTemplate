@@ -11,7 +11,7 @@ namespace LoadWordTemplate.Repositories
 {
     public class CumpleaniosEtiquetaRepository
     {
-        private const float ANCHO_TABLA = 1.0f;
+        private const float ANCHO_TABLA = 0.0f;
         private const string SALTO_LINEA = "\r\n";
 
         private string pathDocumentoPdf = string.Empty;
