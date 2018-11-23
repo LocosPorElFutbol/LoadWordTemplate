@@ -20,8 +20,8 @@ namespace LoadWordTemplate.Client
                 //TestReemplazar300Cartas(e);
 
                 //NEW
-                CrearCartas(e);
-                //CrearEtiquetas(e);
+                //CrearCartas(e);
+                CrearEtiquetas(e);
                 
             }
             catch (Exception ex)

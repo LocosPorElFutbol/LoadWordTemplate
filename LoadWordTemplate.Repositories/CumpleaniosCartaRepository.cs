@@ -58,7 +58,7 @@ namespace LoadWordTemplate.Repositories
         private PdfPTable ArmarTablaCarta(CartaEntity carta)
         {
             //iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             PdfPCell cellColSpan = null;
 
             // Creamos una tabla que contendrá las columnas divisoras de la carta
@@ -68,8 +68,17 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.DefaultCell.Border = Rectangle.NO_BORDER;
 
             // Configuramos el título de las columnas de la tabla
-            string fecha = carta.DiaCumpleanios + " de " + carta.MesCumpleanios + " de " + DateTime.Now.Year + ".";
-            PdfPCell cellFecha = new PdfPCell(new Phrase("Ciudad Autónoma de Buenos Aires, " + fecha, _standardFontEncabezado));
+            PdfPCell cellDesde = new PdfPCell(new Phrase("Ciudad Autónoma de Buenos Aires, ", _standardFontEncabezado));
+            cellDesde.Colspan = 3;
+            cellDesde.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+            cellDesde.BorderWidth = ANCHO_TABLA;
+
+            // Añadimos las celdas a la tabla
+            tablaCarta.AddCell(cellDesde);
+
+            // Configuramos el título de las columnas de la tabla
+            string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
+            PdfPCell cellFecha = new PdfPCell(new Phrase(fecha, _standardFontEncabezado));
             cellFecha.Colspan = 3;
             cellFecha.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
             cellFecha.BorderWidth = ANCHO_TABLA;
@@ -83,44 +92,37 @@ namespace LoadWordTemplate.Repositories
             cellLineaBlanco.Colspan = 3;
             cellLineaBlanco.Border = Rectangle.NO_BORDER;
             tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
 
-            // Titulo
-            PdfPCell cellTitulo = new PdfPCell(new Phrase(carta.Titulo, _standardFontEncabezado));
+            // Titulo y NombreApellido
+            PdfPCell cellTitulo = new PdfPCell(new Phrase(carta.Titulo + " " + carta.NombreApellido, _standardFontEncabezado));
             cellTitulo.BorderWidth = ANCHO_TABLA;
+            cellTitulo.Colspan = 2;
             tablaCarta.AddCell(cellTitulo);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
-            cellColSpan.Colspan = 2;
-            cellColSpan.BorderWidth = ANCHO_TABLA;
-            tablaCarta.AddCell(cellColSpan);
-
-            // NombreApellido
-            PdfPCell cellNombreApellido = new PdfPCell(new Phrase(carta.NombreApellido, _standardFontEncabezado));
-            cellNombreApellido.BorderWidth = ANCHO_TABLA;
-            tablaCarta.AddCell(cellNombreApellido);
-
-            cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
-            cellColSpan.Colspan = 2;
             cellColSpan.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellColSpan);
 
             // Direccion
             PdfPCell cellDireccion = new PdfPCell(new Phrase(carta.Direccion, _standardFontEncabezado));
             cellDireccion.BorderWidth = ANCHO_TABLA;
+            cellDireccion.Colspan = 2;
             tablaCarta.AddCell(cellDireccion);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
-            cellColSpan.Colspan = 2;
             cellColSpan.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellColSpan);
 
             // CP, localidad y provincia
             PdfPCell cellLocalidadCP = new PdfPCell(new Phrase(carta.CPLocalidadProvincia, _standardFontEncabezado));
             cellLocalidadCP.BorderWidth = ANCHO_TABLA;
+            cellLocalidadCP.Colspan = 2;
             tablaCarta.AddCell(cellLocalidadCP);
 
             cellColSpan = new PdfPCell(new Phrase(string.Empty, _standardFontEncabezado));
-            cellColSpan.Colspan = 2;
             cellColSpan.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellColSpan);
 
@@ -140,7 +142,6 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellColSpan);
 
             // Cuerpo mensaje
-            //PdfPCell cellCuerpo = new PdfPCell(this.ObtenerParrafo("txbCuerpo.Text"));
             PdfPCell cellCuerpo = new PdfPCell(this.ObtenerParrafo(carta.CuerpoCarta, _standardFontEncabezado));
             cellCuerpo.Colspan = 3;
 
@@ -159,7 +160,7 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellColSpan);
 
             // Puntos firma
-            PdfPCell cellPuntos = new PdfPCell(new Phrase("....................................", _standardFontEncabezado));
+            PdfPCell cellPuntos = new PdfPCell(new Phrase(".............................................", _standardFontEncabezado));
             cellPuntos.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
             cellPuntos.BorderWidth = ANCHO_TABLA;
             tablaCarta.AddCell(cellPuntos);
@@ -183,10 +184,11 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellColSpan);
 
             // mensaje final
-            PdfPCell cellPie = new PdfPCell(new Phrase(this.GetPie(), _standardFontEncabezado));
-            cellPie.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
-            cellPie.BorderWidth = ANCHO_TABLA;
-            tablaCarta.AddCell(cellPie);
+            //PdfPCell cellPie = new PdfPCell(new Phrase(this.GetPie(), _standardFontEncabezado));
+            //cellPie.HorizontalAlignment = PdfPCell.ALIGN_CENTER;
+            //cellPie.BorderWidth = ANCHO_TABLA;
+            //tablaCarta.AddCell(cellPie);
+
             return tablaCarta;
         }
 

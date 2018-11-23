@@ -11,7 +11,7 @@ namespace LoadWordTemplate.Repositories
 {
     public class CumpleaniosEtiquetaRepository
     {
-        private const float ANCHO_TABLA = 0.0f;
+        private const float ANCHO_TABLA = 1.0f;
         private const string SALTO_LINEA = "\r\n";
 
         private string pathDocumentoPdf = string.Empty;
@@ -56,7 +56,7 @@ namespace LoadWordTemplate.Repositories
 
                     //Agrego filas en la tabla de etiquetas
                     cellEtiqueta = new PdfPCell(new Phrase(textoEtiqueta, _standardFont));
-                    cellEtiqueta.Padding = 8.5f;
+                    cellEtiqueta.Padding = 11.3f;//8.5f;
                     cellEtiqueta.FixedHeight = 72.01f;//25.49mm
                     cellEtiqueta.BorderWidth = ANCHO_TABLA;
 
