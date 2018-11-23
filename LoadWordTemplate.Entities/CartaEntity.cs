@@ -48,6 +48,9 @@ namespace LoadWordTemplate.Entities
         {
             get
             {
+                if (string.IsNullOrEmpty(CodigoPostal) && string.IsNullOrEmpty(Localidad) && string.IsNullOrEmpty(Provincia))
+                    return string.Empty;
+
                 if (Localidad.ToUpper().Equals("CABA"))
                     return string.Format("CP {0}, {1}", CodigoPostal, Localidad);
                 else
