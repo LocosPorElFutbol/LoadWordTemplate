@@ -56,7 +56,7 @@ namespace LoadWordTemplate.Repositories
 
                     //Agrego filas en la tabla de etiquetas
                     cellEtiqueta = new PdfPCell(new Phrase(textoEtiqueta, _standardFont));
-                    cellEtiqueta.Padding = 11.3f;//8.5f;
+                    cellEtiqueta.Padding = 15.0f;//11.3f;//8.5f;
                     cellEtiqueta.FixedHeight = 72.01f;//25.49mm
                     cellEtiqueta.BorderWidth = ANCHO_TABLA;
 

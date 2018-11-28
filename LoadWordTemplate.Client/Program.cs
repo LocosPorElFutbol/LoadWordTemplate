@@ -111,7 +111,7 @@ namespace LoadWordTemplate.Client
             e.CuerpoCarta = new[] { cuerpoCarta };
             lista.Add(e);
 
-            for (int i = 0; i < 50; i++)
+            for (int i = 0; i < 49; i++)
             {
                 e = new CartaEntity();
                 e.Titulo = "Sr.";
@@ -124,6 +124,20 @@ namespace LoadWordTemplate.Client
                 e.CuerpoCarta = new[] { cuerpoCarta };
                 lista.Add(e);
             }
+
+
+            e = new CartaEntity();
+            e.Titulo = "Sr.";
+            e.Nombre = "Damian Ezequiel";
+            e.Apellido = "Jesus Masdeuh";
+            e.Direccion = "Avenida Coronel Niceto Vega 5893 5 C";
+            e.Localidad = "CABA";
+            e.Provincia = "Ciudad autónoma de buenos aires.";
+            e.CodigoPostal = "0600";
+            e.FechaCumpleanios = new DateTime(2013, 07, 22);
+            e.CuerpoCarta = new[] { cuerpoCarta };
+            lista.Add(e);
+            
             return lista;
         }
 
