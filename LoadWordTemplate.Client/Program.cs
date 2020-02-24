@@ -9,26 +9,26 @@ namespace LoadWordTemplate.Client
 {
     class Program
     {
-        static void Main(string[] args)
-        {
-            try
-            {
-                var e = Etiquetas();
-                //OLD
-                //TestEtiquetas();
-                //TestAbrirTemplateCarta();
-                //TestReemplazar300Cartas(e);
+		static void Main(string[] args)
+		{
+			try
+			{
+				var e = Etiquetas();
+				//OLD
+				//TestEtiquetas();
+				//TestAbrirTemplateCarta();
+				//TestReemplazar300Cartas(e);
 
-                //NEW
-                //CrearCartas(e);
-                CrearEtiquetas(e);
-                
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-        }
+				//NEW
+				//CrearCartas(e);
+				CrearEtiquetas(e);
+
+			}
+			catch (Exception ex)
+			{
+				throw ex;
+			}
+		}
 
         private static List<CartaEntity> Etiquetas()
         {
