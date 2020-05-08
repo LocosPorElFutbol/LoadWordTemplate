@@ -20,7 +20,7 @@ namespace LoadWordTemplate.Repositories
             this.pathDocumentoPdf = _pathDocumentoPdf;
         }
 
-        public void CrearEtiquetas(IEnumerable<CartaEntity> listaCartas)
+        public void CrearEtiquetas(IEnumerable<CartaEntity> listaCartas, float wordSize)
         {
             try
             {
@@ -39,7 +39,8 @@ namespace LoadWordTemplate.Repositories
                 doccumentoPdf.Open();
 
                 //Defino fuentes
-                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                //iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+                iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, wordSize, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
 
                 // Creamos una tabla que contendrá las etiquetas en 3 columnas 
                 PdfPTable tablaEtiquetas = new PdfPTable(3);

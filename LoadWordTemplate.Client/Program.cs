@@ -20,7 +20,7 @@ namespace LoadWordTemplate.Client
 				//TestReemplazar300Cartas(e);
 
 				//NEW
-				//CrearCartas(e);
+				CrearCartas(e);
 				CrearEtiquetas(e);
 
 			}
@@ -189,8 +189,9 @@ namespace LoadWordTemplate.Client
         {
             try
             {
+				float wordSize = 13;
                 CumpleaniosCartaBusiness cartaCumpleaniosBusiness = new CumpleaniosCartaBusiness("C:\\Leo\\pruebaCartas.pdf");
-                cartaCumpleaniosBusiness.CrearCartasCumpleanios(cartas);
+                cartaCumpleaniosBusiness.CrearCartasCumpleanios(cartas, wordSize);
             }
             catch (Exception ex)
             {
@@ -202,8 +203,9 @@ namespace LoadWordTemplate.Client
         {
             try
             {
-                CumpleaniosEtiquetaBusiness cumpleaniosEtiquetaBusiness = new CumpleaniosEtiquetaBusiness("C:\\Leo\\pruebaEtiquetas.pdf");
-                cumpleaniosEtiquetaBusiness.CrearEtiquetas(cartas);
+				float wordSize = 10;
+				CumpleaniosEtiquetaBusiness cumpleaniosEtiquetaBusiness = new CumpleaniosEtiquetaBusiness("C:\\Leo\\pruebaEtiquetas.pdf");
+                cumpleaniosEtiquetaBusiness.CrearEtiquetas(cartas, wordSize);
             }
             catch (Exception ex)
             {

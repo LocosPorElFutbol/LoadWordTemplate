@@ -15,9 +15,9 @@ namespace LoadWordTemplate.Business
             this.cumpleaniosEtiquetaRepository = new CumpleaniosEtiquetaRepository(_pathEtiquetasPdf);
         }
 
-        public void CrearEtiquetas(IEnumerable<CartaEntity> listaCartas)
+        public void CrearEtiquetas(IEnumerable<CartaEntity> listaCartas, float wordSize)
         {
-            this.cumpleaniosEtiquetaRepository.CrearEtiquetas(listaCartas);
+            this.cumpleaniosEtiquetaRepository.CrearEtiquetas(listaCartas, wordSize);
         }
     }
 }

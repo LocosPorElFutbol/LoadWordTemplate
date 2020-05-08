@@ -15,11 +15,11 @@ namespace LoadWordTemplate.Business
             cartaCumpleaniosRepository = new CumpleaniosCartaRepository(pathDocumentoPdf);
         }
 
-        public void CrearCartasCumpleanios(IEnumerable<CartaEntity> listaCartas)
+        public void CrearCartasCumpleanios(IEnumerable<CartaEntity> listaCartas, float wordSize)
         {
             try
             {
-                cartaCumpleaniosRepository.GenerarCarta(listaCartas);
+                cartaCumpleaniosRepository.GenerarCarta(listaCartas, wordSize);
             }
             catch (Exception ex)
             {

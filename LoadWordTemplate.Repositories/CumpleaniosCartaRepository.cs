@@ -21,7 +21,7 @@ namespace LoadWordTemplate.Repositories
             this.pathSalidaDocumentoPdf = _pathSalidaDocumentoPdf;
         }
 
-        public void GenerarCarta(IEnumerable<CartaEntity> ListaCartas)
+        public void GenerarCarta(IEnumerable<CartaEntity> ListaCartas, float wordSize)
         {
             try
             {
@@ -40,7 +40,7 @@ namespace LoadWordTemplate.Repositories
 
                 foreach (CartaEntity carta in ListaCartas)
                 {
-                    PdfPTable tblPrueba = ArmarTablaCarta(carta);
+                    PdfPTable tblPrueba = ArmarTablaCarta(carta, wordSize);
                     doccumentoPdf.Add(tblPrueba);
                     doccumentoPdf.Add(Chunk.NEXTPAGE);
                 }
@@ -55,10 +55,11 @@ namespace LoadWordTemplate.Repositories
                 throw ex;
             }
         }
-        private PdfPTable ArmarTablaCarta(CartaEntity carta)
+        private PdfPTable ArmarTablaCarta(CartaEntity carta, float wordSize)
         {
             //iTextSharp.text.Font _standardFont = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 10, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
-            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 14, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            //iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, 13, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
+            iTextSharp.text.Font _standardFontEncabezado = new iTextSharp.text.Font(iTextSharp.text.Font.FontFamily.HELVETICA, wordSize, iTextSharp.text.Font.NORMAL, BaseColor.BLACK);
             PdfPCell cellColSpan = null;
 
             // Creamos una tabla que contendrá las columnas divisoras de la carta
@@ -68,7 +69,9 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.DefaultCell.Border = Rectangle.NO_BORDER;
 
             // Configuramos el título de las columnas de la tabla
-            PdfPCell cellDesde = new PdfPCell(new Phrase("Ciudad Autónoma de Buenos Aires, ", _standardFontEncabezado));
+            string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
+			string caba = "Ciudad Autónoma de Buenos Aires, ";
+			PdfPCell cellDesde = new PdfPCell(new Phrase(string.Concat(caba, fecha), _standardFontEncabezado));
             cellDesde.Colspan = 3;
             cellDesde.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
             cellDesde.BorderWidth = ANCHO_TABLA;
@@ -77,14 +80,14 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.AddCell(cellDesde);
 
             // Configuramos el título de las columnas de la tabla
-            string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
-            PdfPCell cellFecha = new PdfPCell(new Phrase(fecha, _standardFontEncabezado));
-            cellFecha.Colspan = 3;
-            cellFecha.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
-            cellFecha.BorderWidth = ANCHO_TABLA;
+            //string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
+            //PdfPCell cellFecha = new PdfPCell(new Phrase(fecha, _standardFontEncabezado));
+            //cellFecha.Colspan = 3;
+            //cellFecha.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
+            //cellFecha.BorderWidth = ANCHO_TABLA;
 
             // Añadimos las celdas a la tabla
-            tablaCarta.AddCell(cellFecha);
+           // tablaCarta.AddCell(cellFecha);
 
             // Inserto linea en blanco
             PdfPCell cellLineaBlanco = null;
