@@ -70,7 +70,7 @@ namespace LoadWordTemplate.Repositories
 
             // Configuramos el título de las columnas de la tabla
             string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
-			string caba = "Ciudad Autónoma de Buenos Aires, ";
+			string caba = "C.A.B.A, ";
 			PdfPCell cellDesde = new PdfPCell(new Phrase(string.Concat(caba, fecha), _standardFontEncabezado));
             cellDesde.Colspan = 3;
             cellDesde.HorizontalAlignment = PdfPCell.ALIGN_RIGHT;
