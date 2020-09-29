@@ -69,7 +69,7 @@ namespace LoadWordTemplate.Repositories
             tablaCarta.DefaultCell.Border = Rectangle.NO_BORDER;
 
             // Configuramos el título de las columnas de la tabla
-            string fecha = carta.DiaCumpleanios + " " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
+            string fecha = carta.DiaCumpleanios + " de " + carta.MesCumpleanios + " de " + DateTime.Now.Year;
 			string caba = "C.A.B.A, ";
 			PdfPCell cellDesde = new PdfPCell(new Phrase(string.Concat(caba, fecha), _standardFontEncabezado));
             cellDesde.Colspan = 3;
@@ -94,6 +94,8 @@ namespace LoadWordTemplate.Repositories
             cellLineaBlanco = new PdfPCell(new Phrase(Chunk.NEWLINE));
             cellLineaBlanco.Colspan = 3;
             cellLineaBlanco.Border = Rectangle.NO_BORDER;
+            tablaCarta.AddCell(cellLineaBlanco);
+            tablaCarta.AddCell(cellLineaBlanco);
             tablaCarta.AddCell(cellLineaBlanco);
             tablaCarta.AddCell(cellLineaBlanco);
             tablaCarta.AddCell(cellLineaBlanco);
